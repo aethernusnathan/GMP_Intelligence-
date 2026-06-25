@@ -3,1083 +3,802 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI for GMP Documentation — A Practical Guide for Quality Managers</title>
-<meta name="description" content="Evidence-based guide to AI in pharmaceutical GMP documentation — QMS workflow, supply chain, inspection findings, and a scientific assessment of current tools.">
+<title>AI for GMP Documentation — Practical Guide for Quality Managers</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
 <style>
-:root {
-  --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --bg: #EAEDF8;
-  --surface: #FFFFFF;
-  --surface-2: rgba(0,0,0,0.03);
-  --surface-3: #F5F7FC;
-  --text-1: #1C1C1E;
-  --text-2: #515151;
-  --text-3: #8E8E93;
-  --border: rgba(0,0,0,0.07);
-  --border-s: rgba(0,0,0,0.11);
-  --sh-sm: 0 1px 4px rgba(60,60,100,.06), 0 2px 10px rgba(60,60,100,.07);
-  --sh-md: 0 4px 18px rgba(60,60,100,.10), 0 1px 4px rgba(60,60,100,.05);
-  --r: 16px;
-  --r-sm: 10px;
-  --r-pill: 100px;
-  --accent: #1B4F8A;
-  --accent-2: #2B82DC;
-  --green: #1A8C55;
-  --red: #C0392B;
-  --amber: #B07A00;
-  --purple: #6B3FA0;
+:root{
+  --font:'Inter',system-ui,sans-serif;
+  --bg:#EAEDF8;
+  --surface:#FFFFFF;
+  --surface-2:#F4F6FB;
+  --text-1:#17171A;
+  --text-2:#4A4A52;
+  --text-3:#90909A;
+  --border:rgba(0,0,0,.07);
+  --border-m:rgba(0,0,0,.12);
+  --sh:0 1px 3px rgba(50,50,100,.06),0 4px 14px rgba(50,50,100,.08);
+  --sh-lg:0 2px 8px rgba(50,50,100,.07),0 8px 28px rgba(50,50,100,.10);
+  --r:14px;--r-sm:8px;--r-pill:999px;
+  --accent:#1B4F8A;--accent-2:#2B82DC;
+  --green:#1A8C55;--red:#C03A2B;--amber:#A06E00;--purple:#6B3FA0;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html{font-size:16px;scroll-behavior:smooth;}
-body{font-family:var(--font);background:linear-gradient(145deg,#EAEDF8 0%,#EEF0F6 45%,#F5EDE8 100%);background-attachment:fixed;min-height:100vh;color:var(--text-1);-webkit-font-smoothing:antialiased;}
+html{font-size:15px;scroll-behavior:smooth;}
+body{font-family:var(--font);background:linear-gradient(160deg,#EAEDF8 0%,#EEF0F8 50%,#F3EDE6 100%);background-attachment:fixed;min-height:100vh;color:var(--text-1);-webkit-font-smoothing:antialiased;}
 
-/* NAV */
-.top-nav{position:sticky;top:0;z-index:100;background:rgba(234,237,248,.92);backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);border-bottom:1px solid rgba(0,0,0,0.06);padding:0 max(1.5rem,24px);height:54px;display:flex;align-items:center;justify-content:space-between;gap:1rem;}
+/* ─── NAV ─── */
+nav{position:sticky;top:0;z-index:100;height:52px;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:0 clamp(1rem,4vw,2rem);background:rgba(234,237,248,.88);backdrop-filter:blur(20px) saturate(180%);border-bottom:1px solid rgba(0,0,0,.06);}
 .nav-brand{display:flex;align-items:center;gap:9px;flex-shrink:0;}
-.nav-mark{width:30px;height:30px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:700;flex-shrink:0;}
-.nav-title{font-size:.82rem;font-weight:700;color:var(--text-1);letter-spacing:-.01em;}
-.nav-sub{font-size:.6rem;font-weight:500;color:var(--text-3);letter-spacing:.04em;text-transform:uppercase;}
-.nav-links{display:flex;align-items:center;gap:1.1rem;}
-.nav-links a{font-size:.73rem;font-weight:500;color:var(--text-2);text-decoration:none;transition:color .15s;white-space:nowrap;}
+.nav-mark{width:28px;height:28px;background:var(--accent);border-radius:7px;display:grid;place-items:center;color:#fff;font-size:11px;font-weight:800;letter-spacing:-.01em;}
+.nav-name{font-size:.8rem;font-weight:700;line-height:1.2;color:var(--text-1);}
+.nav-sub{font-size:.56rem;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--text-3);}
+.nav-links{display:flex;gap:1.5rem;}
+.nav-links a{font-size:.72rem;font-weight:500;color:var(--text-2);text-decoration:none;transition:color .12s;}
 .nav-links a:hover{color:var(--accent);}
-.nav-pill{font-size:.65rem;font-weight:600;padding:.28rem .8rem;border:1px solid var(--border-s);border-radius:var(--r-pill);background:rgba(255,255,255,.7);color:var(--text-2);white-space:nowrap;}
-@media(max-width:780px){.nav-links{display:none;}}
+.nav-date{font-size:.65rem;font-weight:600;padding:.25rem .75rem;border:1px solid var(--border-m);border-radius:var(--r-pill);color:var(--text-3);background:rgba(255,255,255,.6);white-space:nowrap;}
+@media(max-width:800px){.nav-links{display:none;}}
 
-/* LAYOUT */
-.container{max-width:1100px;margin:0 auto;padding:0 1.5rem;}
-.section{padding:3.5rem 0;}
-.sec-label{font-size:.65rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-2);margin-bottom:.4rem;}
-.sec-title{font-size:1.75rem;font-weight:800;color:var(--text-1);line-height:1.2;margin-bottom:.6rem;letter-spacing:-.02em;}
-.sec-sub{font-size:.95rem;color:var(--text-2);max-width:680px;line-height:1.75;margin-bottom:2rem;}
-.divider{border:none;border-top:1px solid var(--border);margin:0;}
-.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;}
-.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;}
-.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;}
+/* ─── LAYOUT ─── */
+.wrap{max-width:1080px;margin:0 auto;padding:0 clamp(1rem,4vw,2rem);}
+.section{padding:4rem 0;}
+.section+.section{border-top:1px solid var(--border);}
 
-/* HERO */
-.hero{padding:4.5rem 1.5rem 3rem;text-align:center;position:relative;overflow:hidden;}
-.hero-eyebrow{display:inline-flex;align-items:center;gap:.5rem;background:rgba(255,255,255,.7);border:1px solid var(--border-s);border-radius:var(--r-pill);padding:.35rem 1rem;font-size:.72rem;font-weight:600;color:var(--accent);letter-spacing:.03em;margin-bottom:1.5rem;}
-.hero h1{font-size:clamp(2rem,5vw,3.1rem);font-weight:800;line-height:1.1;color:var(--text-1);letter-spacing:-.03em;max-width:820px;margin:0 auto 1.2rem;}
-.hero h1 em{font-style:normal;color:var(--accent-2);}
-.hero-sub{font-size:1rem;color:var(--text-2);max-width:680px;margin:0 auto 2rem;line-height:1.75;}
-.hero-stats{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:2rem;}
-.hero-stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1.1rem 1.4rem;text-align:left;min-width:170px;box-shadow:var(--sh-sm);}
-.hero-stat-num{font-size:1.9rem;font-weight:800;line-height:1;color:var(--accent);}
-.hero-stat-num.red{color:var(--red);}
-.hero-stat-num.amber{color:var(--amber);}
-.hero-stat-num.green{color:var(--green);}
-.hero-stat-label{font-size:.72rem;color:var(--text-3);margin-top:.35rem;line-height:1.4;}
-.hero-cite{font-size:.6rem;color:rgba(0,0,0,.3);margin-top:.3rem;}
+/* ─── SECTION HEADER ─── */
+.sec-hd{margin-bottom:2rem;}
+.sec-kicker{display:inline-flex;align-items:center;gap:.5rem;margin-bottom:.55rem;}
+.sec-num{width:20px;height:20px;border-radius:50%;background:var(--accent);color:#fff;font-size:.6rem;font-weight:800;display:grid;place-items:center;flex-shrink:0;}
+.sec-label{font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--accent-2);}
+.sec-title{font-size:1.45rem;font-weight:800;line-height:1.2;letter-spacing:-.025em;color:var(--text-1);margin-bottom:.55rem;}
+.sec-sub{font-size:.9rem;color:var(--text-2);line-height:1.7;max-width:620px;}
 
-/* AUTOMATION BIAS BANNER */
-.bias-banner{background:linear-gradient(135deg,rgba(192,57,43,.07) 0%,rgba(176,122,0,.06) 100%);border:1.5px solid rgba(192,57,43,.22);border-radius:var(--r);padding:1.4rem 1.75rem;display:flex;gap:1.1rem;align-items:flex-start;margin:2rem 0;}
-.bias-banner-icon{font-size:2rem;flex-shrink:0;}
-.bias-banner h3{font-size:1rem;font-weight:800;color:var(--red);margin-bottom:.35rem;}
-.bias-banner p{font-size:.875rem;color:var(--text-2);line-height:1.65;}
-.bias-banner .cite{font-size:.65rem;color:var(--text-3);margin-top:.4rem;}
+/* ─── STAT STRIP ─── */
+.stat-strip{display:flex;gap:.75rem;margin-bottom:1.75rem;flex-wrap:wrap;}
+.stat-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:.9rem 1.1rem;min-width:140px;box-shadow:var(--sh);flex:1;}
+.stat-n{font-size:1.75rem;font-weight:800;line-height:1;letter-spacing:-.03em;}
+.stat-n.r{color:var(--red);}
+.stat-n.a{color:var(--amber);}
+.stat-n.g{color:var(--green);}
+.stat-n.b{color:var(--accent);}
+.stat-t{font-size:.68rem;color:var(--text-3);margin-top:.28rem;line-height:1.4;}
+.stat-src{font-size:.56rem;color:rgba(0,0,0,.25);margin-top:.25rem;}
 
-/* CARDS */
-.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1.4rem;box-shadow:var(--sh-sm);}
-.card h3{font-size:.95rem;font-weight:700;color:var(--text-1);margin-bottom:.45rem;}
-.card p{font-size:.855rem;color:var(--text-2);line-height:1.65;}
-.card .cite{font-size:.65rem;color:var(--text-3);margin-top:.55rem;}
+/* ─── CARDS ─── */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1.25rem;box-shadow:var(--sh);}
+.card-title{font-size:.875rem;font-weight:700;color:var(--text-1);margin-bottom:.35rem;}
+.card-body{font-size:.82rem;color:var(--text-2);line-height:1.65;}
+.card-src{font-size:.6rem;color:var(--text-3);margin-top:.5rem;}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:.9rem;}
 
-/* CALLOUTS */
-.callout{background:rgba(27,79,138,.06);border:1px solid rgba(27,79,138,.18);border-radius:var(--r);padding:1.2rem 1.5rem;margin:1.4rem 0;}
-.callout.amber{background:rgba(176,122,0,.05);border-color:rgba(176,122,0,.2);}
-.callout.red{background:rgba(192,57,43,.05);border-color:rgba(192,57,43,.2);}
-.callout.green{background:rgba(26,140,85,.05);border-color:rgba(26,140,85,.2);}
-.callout.purple{background:rgba(107,63,160,.05);border-color:rgba(107,63,160,.2);}
-.callout h4{font-size:.84rem;font-weight:700;color:var(--accent);margin-bottom:.38rem;}
-.callout.amber h4{color:var(--amber);}
-.callout.red h4{color:var(--red);}
-.callout.green h4{color:var(--green);}
-.callout.purple h4{color:var(--purple);}
-.callout p{font-size:.845rem;color:var(--text-2);line-height:1.65;}
+/* ─── LEFT-BORDER NOTES ─── */
+.note{border-left:3px solid var(--accent);padding:.7rem 1rem;margin:.6rem 0;background:rgba(27,79,138,.03);border-radius:0 var(--r-sm) var(--r-sm) 0;}
+.note.warn{border-color:var(--amber);background:rgba(160,110,0,.03);}
+.note.danger{border-color:var(--red);background:rgba(192,58,43,.03);}
+.note.green{border-color:var(--green);background:rgba(26,140,85,.03);}
+.note.purple{border-color:var(--purple);background:rgba(107,63,160,.03);}
+.note-label{font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);margin-bottom:.2rem;}
+.note.warn .note-label{color:var(--amber);}
+.note.danger .note-label{color:var(--red);}
+.note.green .note-label{color:var(--green);}
+.note.purple .note-label{color:var(--purple);}
+.note-text{font-size:.82rem;color:var(--text-2);line-height:1.6;}
+.note-text strong{color:var(--text-1);}
 
-/* PROCESS DIAGRAM */
-.process-diagram{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1.75rem;box-shadow:var(--sh-sm);overflow-x:auto;}
-.proc-flow{display:flex;align-items:stretch;gap:0;min-width:680px;}
-.proc-step{display:flex;flex-direction:column;align-items:center;flex:1;position:relative;}
-.proc-step:not(:last-child)::after{content:'→';position:absolute;right:calc(-.55rem);top:40%;font-size:1rem;color:var(--text-3);z-index:2;}
-.proc-box{background:var(--surface-3);border:1px solid var(--border-s);border-radius:var(--r-sm);padding:.7rem .45rem;text-align:center;width:100%;}
-.proc-box.highlight{background:rgba(43,130,220,.06);border-color:rgba(43,130,220,.2);}
-.proc-box.warning{background:rgba(192,57,43,.05);border-color:rgba(192,57,43,.2);}
-.proc-icon{font-size:1.4rem;margin-bottom:.25rem;}
-.proc-name{font-size:.72rem;font-weight:700;color:var(--text-1);margin-bottom:.12rem;}
-.proc-sub{font-size:.58rem;color:var(--text-3);line-height:1.3;}
-.proc-docs{margin-top:.45rem;display:flex;flex-direction:column;gap:3px;}
-.proc-doc{font-size:.56rem;background:rgba(43,130,220,.08);color:var(--accent-2);border-radius:3px;padding:1px 4px;white-space:nowrap;}
-.proc-doc.red{background:rgba(192,57,43,.07);color:var(--red);}
+/* ─── HERO ─── */
+.hero{padding:4rem clamp(1rem,4vw,2rem) 3rem;text-align:center;}
+.hero-badge{display:inline-flex;align-items:center;gap:.4rem;background:rgba(255,255,255,.75);border:1px solid var(--border-m);border-radius:var(--r-pill);padding:.3rem .9rem;font-size:.68rem;font-weight:600;color:var(--accent);letter-spacing:.02em;margin-bottom:1.3rem;}
+.hero h1{font-size:clamp(1.8rem,4.5vw,2.9rem);font-weight:800;line-height:1.1;letter-spacing:-.035em;color:var(--text-1);max-width:780px;margin:0 auto .9rem;}
+.hero h1 span{color:var(--accent-2);}
+.hero-sub{font-size:.95rem;color:var(--text-2);max-width:600px;margin:0 auto 1rem;line-height:1.7;}
 
-/* QMS PYRAMID */
-.qms-pyramid{display:flex;flex-direction:column;gap:.45rem;}
-.qms-level{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-sm);padding:.85rem 1.2rem;display:flex;align-items:center;gap:.9rem;}
-.qms-level-num{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#fff;font-size:.68rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.qms-level-num.l2{background:var(--accent-2);}
-.qms-level-num.l3{background:var(--purple);}
-.qms-level-num.l4{background:var(--green);}
-.qms-level-num.l5{background:var(--amber);}
-.qms-level-num.l6{background:var(--red);}
-.qms-level-name{font-size:.875rem;font-weight:700;color:var(--text-1);}
-.qms-level-desc{font-size:.73rem;color:var(--text-2);margin-top:.08rem;}
-.qms-level-vol{margin-left:auto;font-size:.68rem;font-weight:600;padding:.18rem .55rem;border-radius:var(--r-pill);white-space:nowrap;}
-.vol-high{background:rgba(192,57,43,.08);color:var(--red);}
-.vol-med{background:rgba(176,122,0,.08);color:var(--amber);}
-.vol-low{background:rgba(26,140,85,.08);color:var(--green);}
+/* AUTOMATION BIAS ALERT — hero banner */
+.alert-banner{display:flex;gap:.9rem;align-items:flex-start;background:rgba(192,58,43,.04);border:1px solid rgba(192,58,43,.16);border-radius:var(--r);padding:1.1rem 1.3rem;margin:1.5rem auto;max-width:820px;text-align:left;}
+.alert-icon{font-size:1.5rem;flex-shrink:0;line-height:1;}
+.alert-title{font-size:.82rem;font-weight:700;color:var(--red);margin-bottom:.25rem;}
+.alert-body{font-size:.8rem;color:var(--text-2);line-height:1.6;}
+.alert-cite{font-size:.6rem;color:var(--text-3);margin-top:.3rem;}
 
-/* SUPPLY CHAIN */
-.sc-diagram{display:grid;grid-template-columns:repeat(5,1fr);gap:.65rem;align-items:start;}
-.sc-node{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-sm);padding:.85rem .65rem;text-align:center;position:relative;box-shadow:var(--sh-sm);}
-.sc-node.core{border-color:rgba(43,130,220,.3);background:rgba(43,130,220,.04);}
-.sc-node::after{content:'→';position:absolute;right:calc(-.45rem);top:50%;transform:translateY(-50%);font-size:.85rem;color:var(--text-3);}
+/* ─── PROCESS FLOW ─── */
+.flow-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1.5rem;box-shadow:var(--sh);overflow-x:auto;}
+.flow{display:flex;align-items:flex-start;gap:0;min-width:640px;}
+.flow-step{flex:1;padding:0 .25rem;position:relative;}
+.flow-step:not(:last-child)::after{content:'';position:absolute;top:28px;right:-1px;width:8px;height:8px;border-top:2px solid var(--border-m);border-right:2px solid var(--border-m);transform:rotate(45deg);z-index:1;}
+.flow-box{background:var(--surface-2);border:1px solid var(--border);border-radius:var(--r-sm);padding:.75rem .6rem;text-align:center;}
+.flow-box.hi{border-color:rgba(43,130,220,.25);background:rgba(43,130,220,.04);}
+.flow-box.crit{border-color:rgba(192,58,43,.22);background:rgba(192,58,43,.04);}
+.flow-icon{font-size:1.25rem;margin-bottom:.2rem;}
+.flow-name{font-size:.72rem;font-weight:700;color:var(--text-1);margin-bottom:.15rem;}
+.flow-sub{font-size:.58rem;color:var(--text-3);line-height:1.3;}
+.flow-tags{margin-top:.5rem;display:flex;flex-direction:column;gap:3px;}
+.tag{font-size:.55rem;border-radius:4px;padding:1px 5px;background:rgba(43,130,220,.07);color:var(--accent-2);}
+.tag.r{background:rgba(192,58,43,.07);color:var(--red);}
+
+/* ─── QMS LEVELS ─── */
+.levels{display:flex;flex-direction:column;gap:.4rem;}
+.level{display:flex;align-items:center;gap:.8rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-sm);padding:.7rem 1rem;}
+.lbadge{width:24px;height:24px;border-radius:6px;display:grid;place-items:center;font-size:.62rem;font-weight:800;color:#fff;flex-shrink:0;}
+.lname{font-size:.82rem;font-weight:700;color:var(--text-1);}
+.ldesc{font-size:.7rem;color:var(--text-3);}
+.lvol{margin-left:auto;font-size:.62rem;font-weight:600;padding:.15rem .5rem;border-radius:var(--r-pill);white-space:nowrap;flex-shrink:0;}
+
+/* ─── WORKFLOW STEPS ─── */
+.wf{display:flex;flex-direction:column;}
+.wf-row{display:flex;gap:.85rem;position:relative;}
+.wf-row:not(:last-child)::after{content:'';position:absolute;left:14px;top:32px;bottom:0;width:2px;background:var(--border);}
+.wf-dot{width:28px;height:28px;border-radius:50%;border:2px solid var(--border-m);background:var(--surface);display:grid;place-items:center;font-size:.65rem;flex-shrink:0;margin-top:2px;}
+.wf-dot.r{border-color:var(--red);background:rgba(192,58,43,.06);}
+.wf-dot.a{border-color:var(--amber);background:rgba(160,110,0,.06);}
+.wf-dot.g{border-color:var(--green);background:rgba(26,140,85,.06);}
+.wf-body{padding:.15rem 0 1.2rem;}
+.wf-title{font-size:.85rem;font-weight:700;color:var(--text-1);}
+.wf-desc{font-size:.78rem;color:var(--text-2);margin-top:.18rem;line-height:1.55;}
+.wf-tag{display:inline-block;margin-top:.28rem;font-size:.6rem;font-weight:600;padding:.12rem .48rem;border-radius:4px;}
+.wf-tag.r{background:rgba(192,58,43,.07);color:var(--red);}
+.wf-tag.a{background:rgba(160,110,0,.07);color:var(--amber);}
+.wf-tag.g{background:rgba(26,140,85,.07);color:var(--green);}
+
+/* ─── SUPPLY CHAIN ─── */
+.sc{display:grid;grid-template-columns:repeat(5,1fr);gap:.6rem;}
+.sc-node{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-sm);padding:.8rem .6rem;text-align:center;box-shadow:var(--sh);position:relative;}
+.sc-node.core{border-color:rgba(43,130,220,.28);background:rgba(43,130,220,.03);}
+.sc-node::after{content:'›';position:absolute;right:-10px;top:50%;transform:translateY(-50%);color:var(--text-3);font-size:.9rem;z-index:1;}
 .sc-node:last-child::after{display:none;}
-.sc-icon{font-size:1.3rem;margin-bottom:.25rem;}
-.sc-name{font-size:.72rem;font-weight:700;color:var(--text-1);margin-bottom:.12rem;}
-.sc-docs{margin-top:.45rem;display:flex;flex-direction:column;gap:2px;}
-.sc-pill{font-size:.54rem;padding:1px 4px;border-radius:3px;background:rgba(0,0,0,.05);color:var(--text-2);}
-.sc-pill.red{background:rgba(192,57,43,.08);color:var(--red);}
+.sc-icon{font-size:1.2rem;margin-bottom:.2rem;}
+.sc-name{font-size:.68rem;font-weight:700;color:var(--text-1);margin-bottom:.15rem;}
+.sc-tags{display:flex;flex-direction:column;gap:2px;margin-top:.4rem;}
+.sc-tag{font-size:.52rem;padding:1px 4px;border-radius:3px;background:rgba(0,0,0,.04);color:var(--text-2);}
+.sc-tag.r{background:rgba(192,58,43,.07);color:var(--red);}
 
-/* CROSS-SYSTEM DIAGRAM */
-.xsys{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:.5rem;align-items:center;margin:1.25rem 0;}
-.xsys-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-sm);padding:.8rem;text-align:center;box-shadow:var(--sh-sm);}
-.xsys-box.gap{border-color:rgba(192,57,43,.3);background:rgba(192,57,43,.04);}
-.xsys-label{font-size:.72rem;font-weight:700;color:var(--text-1);}
-.xsys-sub{font-size:.6rem;color:var(--text-3);margin-top:.12rem;line-height:1.3;}
-.xsys-arrow{text-align:center;font-size:1.1rem;color:var(--text-3);padding:0 .2rem;}
-.xsys-arrow.red{color:var(--red);font-size:.8rem;}
+/* ─── GAP DIAGRAM ─── */
+.gap-row{display:flex;align-items:center;gap:.5rem;margin:1rem 0;flex-wrap:wrap;}
+.gap-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-sm);padding:.8rem 1rem;flex:1;min-width:160px;box-shadow:var(--sh);}
+.gap-box.broken{border-color:rgba(192,58,43,.28);background:rgba(192,58,43,.03);}
+.gap-conn{font-size:.8rem;color:var(--text-3);flex-shrink:0;text-align:center;min-width:30px;}
+.gap-conn.x{color:var(--red);font-weight:700;}
+.gap-box-label{font-size:.72rem;font-weight:700;color:var(--text-1);}
+.gap-box-sub{font-size:.62rem;color:var(--text-3);margin-top:.18rem;line-height:1.3;}
 
-/* WORKFLOW */
-.workflow{display:flex;flex-direction:column;gap:0;}
-.wf-step{display:flex;gap:1rem;position:relative;}
-.wf-step:not(:last-child)::after{content:'';position:absolute;left:16px;top:36px;bottom:0;width:2px;background:var(--border);}
-.wf-dot{width:32px;height:32px;border-radius:50%;border:2px solid var(--border);background:var(--surface);display:flex;align-items:center;justify-content:center;font-size:.72rem;flex-shrink:0;margin-top:4px;}
-.wf-dot.hot{border-color:var(--red);background:rgba(192,57,43,.08);}
-.wf-dot.ok{border-color:var(--green);background:rgba(26,140,85,.08);}
-.wf-dot.warn{border-color:var(--amber);background:rgba(176,122,0,.08);}
-.wf-body{padding:.25rem 0 1.4rem;}
-.wf-title{font-size:.875rem;font-weight:700;color:var(--text-1);}
-.wf-desc{font-size:.795rem;color:var(--text-2);margin-top:.22rem;line-height:1.55;}
-.wf-badge{display:inline-block;margin-top:.3rem;font-size:.6rem;font-weight:600;padding:.14rem .52rem;border-radius:4px;}
-.wf-badge.red{background:rgba(192,57,43,.08);color:var(--red);}
-.wf-badge.amber{background:rgba(176,122,0,.08);color:var(--amber);}
-.wf-badge.green{background:rgba(26,140,85,.08);color:var(--green);}
+/* ─── LIVE FEED ─── */
+.feed-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;box-shadow:var(--sh);}
+.feed-hdr{padding:.7rem 1.1rem;background:var(--surface-2);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:.5rem;flex-wrap:wrap;}
+.feed-title{font-size:.76rem;font-weight:700;display:flex;align-items:center;gap:.4rem;}
+.live-dot{width:6px;height:6px;border-radius:50%;background:var(--red);box-shadow:0 0 5px rgba(192,58,43,.5);animation:blink 1.6s infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.3;}}
+.feed-meta{font-size:.6rem;color:var(--text-3);}
+.feed-filters{display:flex;gap:.35rem;padding:.55rem 1.1rem;border-bottom:1px solid var(--border);flex-wrap:wrap;}
+.ffbtn{font-size:.62rem;font-weight:600;padding:.2rem .6rem;border-radius:var(--r-pill);border:1px solid var(--border-m);background:var(--surface);color:var(--text-2);cursor:pointer;transition:all .12s;}
+.ffbtn.on{background:var(--accent);color:#fff;border-color:var(--accent);}
+.feed-body{padding:.85rem 1.1rem;min-height:90px;}
+.fi{display:flex;gap:.6rem;padding:.5rem 0;border-bottom:1px solid var(--border);}
+.fi:last-child{border-bottom:none;}
+.fi-cls{font-size:.58rem;font-weight:700;padding:.12rem .4rem;border-radius:3px;min-width:36px;text-align:center;flex-shrink:0;margin-top:1px;}
+.fi-cls.I{background:rgba(192,58,43,.1);color:var(--red);}
+.fi-cls.II{background:rgba(160,110,0,.1);color:var(--amber);}
+.fi-cls.III{background:rgba(0,0,0,.05);color:var(--text-3);}
+.fi-firm{font-size:.76rem;font-weight:600;color:var(--text-1);}
+.fi-reason{font-size:.69rem;color:var(--text-2);margin-top:.12rem;line-height:1.4;}
+.fi-date{font-size:.58rem;color:var(--text-3);margin-top:.15rem;}
+.feed-spin{text-align:center;padding:1.2rem;font-size:.8rem;color:var(--text-3);}
 
-/* LIVE FEED */
-.live-feed{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;box-shadow:var(--sh-sm);}
-.live-feed-header{padding:.75rem 1.2rem;background:var(--surface-3);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;}
-.live-title{font-size:.79rem;font-weight:700;color:var(--text-1);display:flex;align-items:center;gap:.45rem;}
-.live-dot{width:7px;height:7px;border-radius:50%;background:#E53E3E;box-shadow:0 0 6px rgba(229,62,62,.5);animation:pulse 1.5s infinite;}
-@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.35;}}
-.live-meta{font-size:.62rem;color:var(--text-3);}
-.feed-filters{display:flex;gap:.4rem;flex-wrap:wrap;padding:.6rem 1.2rem;border-bottom:1px solid var(--border);background:rgba(0,0,0,.01);}
-.feed-filter-btn{font-size:.65rem;font-weight:600;padding:.22rem .65rem;border-radius:var(--r-pill);border:1px solid var(--border-s);background:var(--surface);color:var(--text-2);cursor:pointer;transition:all .15s;}
-.feed-filter-btn.active{background:var(--accent);color:#fff;border-color:var(--accent);}
-.live-body{padding:.9rem 1.2rem;min-height:100px;}
-.feed-item{display:flex;gap:.7rem;padding:.55rem 0;border-bottom:1px solid var(--border);}
-.feed-item:last-child{border-bottom:none;}
-.feed-cls{font-size:.6rem;font-weight:700;padding:.14rem .45rem;border-radius:4px;min-width:40px;text-align:center;margin-top:1px;flex-shrink:0;}
-.feed-cls.I{background:rgba(192,57,43,.1);color:var(--red);}
-.feed-cls.II{background:rgba(176,122,0,.1);color:var(--amber);}
-.feed-cls.III{background:rgba(0,0,0,.05);color:var(--text-3);}
-.feed-firm{font-size:.79rem;font-weight:600;color:var(--text-1);line-height:1.3;}
-.feed-reason{font-size:.71rem;color:var(--text-2);margin-top:.14rem;line-height:1.4;}
-.feed-date{font-size:.6rem;color:var(--text-3);margin-top:.18rem;}
-.feed-loading{text-align:center;padding:1.4rem;color:var(--text-3);font-size:.84rem;}
+/* ─── MATRIX ─── */
+.mx-wrap{overflow-x:auto;border-radius:var(--r);box-shadow:var(--sh);}
+table.mx{width:100%;border-collapse:collapse;font-size:.74rem;background:var(--surface);min-width:860px;}
+table.mx th{background:#EFF2FA;color:var(--text-3);font-size:.57rem;font-weight:700;text-transform:uppercase;letter-spacing:.055em;padding:.6rem .65rem;border-bottom:2px solid var(--border-m);text-align:center;white-space:nowrap;}
+table.mx th:first-child{text-align:left;min-width:160px;}
+table.mx th:last-child{text-align:left;min-width:180px;}
+table.mx td{padding:.55rem .65rem;border-bottom:1px solid var(--border);vertical-align:middle;text-align:center;}
+table.mx td:first-child{text-align:left;}
+table.mx td:last-child{text-align:left;}
+table.mx tr:last-child td{border-bottom:none;}
+table.mx tr:hover td{background:rgba(43,130,220,.02);}
+.mx-sep td{background:#F7F9FD;padding:.3rem .65rem;border-top:1.5px solid var(--border-m);}
+.mx-sep-label{font-size:.56rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text-3);}
+.pname{font-size:.78rem;font-weight:700;color:var(--text-1);}
+.ptype{font-size:.6rem;color:var(--text-3);margin-top:.05rem;}
+.ci{width:18px;height:18px;border-radius:50%;display:inline-grid;place-items:center;font-size:.62rem;}
+.ci.y{background:rgba(26,140,85,.1);color:var(--green);border:1px solid rgba(26,140,85,.22);}
+.ci.p{background:rgba(160,110,0,.09);color:var(--amber);border:1px solid rgba(160,110,0,.2);}
+.ci.n{background:rgba(192,58,43,.07);color:rgba(192,58,43,.7);border:1px solid rgba(192,58,43,.14);}
+.ci.na{background:transparent;color:var(--text-3);border:1px solid var(--border);font-size:.5rem;}
+.ev{font-size:.58rem;color:var(--text-2);background:var(--surface-2);border:1px solid var(--border);padding:.12rem .45rem;border-radius:.35rem;display:inline-block;line-height:1.4;}
 
-/* MATRIX */
-.matrix-outer{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:var(--r);box-shadow:var(--sh-sm);}
-table.matrix{width:100%;border-collapse:collapse;font-size:.77rem;background:var(--surface);min-width:900px;}
-table.matrix th{background:#F0F3FA;color:var(--text-3);font-size:.58rem;font-weight:700;text-transform:uppercase;letter-spacing:.055em;padding:.65rem .7rem;border-bottom:2px solid var(--border-s);text-align:center;white-space:nowrap;vertical-align:bottom;}
-table.matrix th:first-child{text-align:left;min-width:165px;}
-table.matrix th:last-child{text-align:left;min-width:190px;}
-table.matrix td{padding:.6rem .7rem;border-bottom:1px solid var(--border);vertical-align:middle;text-align:center;}
-table.matrix td:first-child{text-align:left;}
-table.matrix td:last-child{text-align:left;}
-table.matrix tr:last-child td{border-bottom:none;}
-table.matrix tr:hover td{background:rgba(43,130,220,.025);}
-table.matrix tbody tr.separator-row td{background:#F8F9FC;padding:.3rem .7rem;border-top:2px solid var(--border-s);}
-.p-name{font-size:.8rem;font-weight:700;color:var(--text-1);}
-.p-type{font-size:.63rem;color:var(--text-3);margin-top:.08rem;}
-.cap{width:20px;height:20px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:.65rem;}
-.cap.y{background:rgba(26,140,85,.12);color:var(--green);border:1px solid rgba(26,140,85,.25);}
-.cap.p{background:rgba(176,122,0,.1);color:var(--amber);border:1px solid rgba(176,122,0,.2);}
-.cap.n{background:rgba(192,57,43,.07);color:rgba(192,57,43,.7);border:1px solid rgba(192,57,43,.15);}
-.cap.na{background:transparent;color:var(--text-3);border:1px solid var(--border);font-size:.52rem;}
-.ev-pill{font-size:.6rem;color:var(--text-2);background:var(--surface-3);border:1px solid var(--border);padding:.13rem .5rem;border-radius:.4rem;display:inline-block;line-height:1.4;}
-.note-sup{font-size:.56rem;color:var(--red);}
-.row-label{font-size:.58rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-3);}
+/* ─── FAIL CARDS ─── */
+.fail-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.85rem;}
+.fc{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--red);border-radius:0 var(--r) var(--r) 0;padding:1.1rem;box-shadow:var(--sh);}
+.fc.bias{border-left-color:var(--red);border-color:rgba(192,58,43,.18);}
+.fc-num{display:inline-block;width:18px;height:18px;border-radius:50%;background:rgba(192,58,43,.1);color:var(--red);font-size:.6rem;font-weight:800;text-align:center;line-height:18px;margin-right:.3rem;}
+.fc h4{font-size:.82rem;font-weight:700;color:var(--text-1);margin-bottom:.3rem;}
+.fc p{font-size:.77rem;color:var(--text-2);line-height:1.6;}
+.fc .src{font-size:.58rem;color:var(--text-3);margin-top:.4rem;}
 
-/* FAIL CARDS */
-.fail-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.9rem;margin-bottom:1.4rem;}
-.fail-card{background:var(--surface);border:1px solid rgba(192,57,43,.12);border-radius:var(--r);padding:1.15rem;box-shadow:var(--sh-sm);}
-.fail-card.bias{border-color:rgba(192,57,43,.3);background:rgba(192,57,43,.03);}
-.fail-card h4{font-size:.83rem;font-weight:700;color:var(--red);margin-bottom:.38rem;}
-.fail-card p{font-size:.785rem;color:var(--text-2);line-height:1.6;}
-.fail-card .cite{font-size:.6rem;color:var(--text-3);margin-top:.45rem;}
-.fail-num{display:inline-block;width:20px;height:20px;border-radius:50%;background:rgba(192,57,43,.12);color:var(--red);font-size:.65rem;font-weight:800;text-align:center;line-height:20px;margin-right:.35rem;flex-shrink:0;}
+/* ─── ARCH LAYERS ─── */
+.arch-grid{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;}
+.arch{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;box-shadow:var(--sh);}
+.arch-hdr{display:flex;align-items:center;gap:.5rem;padding:.6rem .9rem;border-bottom:1px solid var(--border);}
+.arch-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.arch-label{font-size:.7rem;font-weight:700;color:var(--text-1);}
+.arch-body{padding:.6rem .9rem;}
+.ai{display:flex;gap:.5rem;padding:.42rem 0;border-bottom:1px solid var(--border);}
+.ai:last-child{border-bottom:none;}
+.ai-icon{font-size:.9rem;width:18px;text-align:center;flex-shrink:0;}
+.ai-title{font-size:.74rem;font-weight:600;color:var(--text-1);}
+.ai-body{font-size:.67rem;color:var(--text-2);line-height:1.4;margin-top:.06rem;}
 
-/* ARCH */
-.arch-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.9rem;}
-.arch-layer{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;box-shadow:var(--sh-sm);}
-.arch-hdr{padding:.6rem .95rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:.45rem;}
-.arch-hdr-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
-.arch-hdr-title{font-size:.73rem;font-weight:700;color:var(--text-1);}
-.arch-body{padding:.7rem .95rem;}
-.arch-item{display:flex;gap:.55rem;padding:.45rem 0;border-bottom:1px solid var(--border);}
-.arch-item:last-child{border-bottom:none;}
-.arch-item-icon{font-size:.9rem;width:18px;text-align:center;flex-shrink:0;margin-top:1px;}
-.arch-item h5{font-size:.76rem;font-weight:600;color:var(--text-1);}
-.arch-item p{font-size:.68rem;color:var(--text-2);margin-top:.08rem;line-height:1.4;}
-
-/* ONPREM BANNER */
-.onprem-banner{background:linear-gradient(135deg,rgba(107,63,160,.07) 0%,rgba(27,79,138,.07) 100%);border:1.5px solid rgba(107,63,160,.22);border-radius:var(--r);padding:1.4rem 1.75rem;display:flex;gap:1.1rem;align-items:flex-start;margin:1.5rem 0;}
-.onprem-banner-icon{font-size:1.9rem;flex-shrink:0;}
-.onprem-banner h3{font-size:.95rem;font-weight:800;color:var(--purple);margin-bottom:.32rem;}
-.onprem-banner p{font-size:.855rem;color:var(--text-2);line-height:1.65;}
-
-/* TIMELINE */
-.tl{display:flex;flex-direction:column;gap:0;}
-.tl-item{display:flex;gap:1rem;position:relative;}
-.tl-item:not(:last-child)::after{content:'';position:absolute;left:16px;top:36px;bottom:0;width:2px;background:var(--border);}
-.tl-dot{width:34px;height:34px;border-radius:50%;border:2px solid var(--border);background:var(--surface);display:flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:700;color:var(--text-3);flex-shrink:0;}
+/* ─── TIMELINE ─── */
+.tl{display:flex;flex-direction:column;}
+.tl-row{display:flex;gap:.9rem;position:relative;}
+.tl-row:not(:last-child)::after{content:'';position:absolute;left:15px;top:34px;bottom:0;width:2px;background:var(--border);}
+.tl-dot{width:30px;height:30px;border-radius:50%;border:2px solid var(--border-m);background:var(--surface);display:grid;place-items:center;font-size:.65rem;font-weight:700;color:var(--text-3);flex-shrink:0;}
 .tl-dot.done{border-color:var(--green);color:var(--green);background:rgba(26,140,85,.06);}
-.tl-dot.now{border-color:var(--amber);color:var(--amber);background:rgba(176,122,0,.06);}
+.tl-dot.now{border-color:var(--amber);color:var(--amber);background:rgba(160,110,0,.06);}
 .tl-dot.soon{border-color:var(--accent-2);color:var(--accent-2);background:rgba(43,130,220,.06);}
-.tl-body{padding:.32rem 0 1.65rem;}
-.tl-body h4{font-size:.87rem;font-weight:700;color:var(--text-1);}
-.tl-body p{font-size:.79rem;color:var(--text-2);margin-top:.28rem;line-height:1.6;}
-.tl-pill{display:inline-block;margin-top:.4rem;font-size:.61rem;font-weight:600;padding:.14rem .52rem;border-radius:var(--r-pill);}
-.tl-pill.done{background:rgba(26,140,85,.1);color:var(--green);}
-.tl-pill.amber{background:rgba(176,122,0,.1);color:var(--amber);}
-.tl-pill.blue{background:rgba(43,130,220,.1);color:var(--accent-2);}
-.tl-pill.red{background:rgba(192,57,43,.08);color:var(--red);}
+.tl-body{padding:.2rem 0 1.5rem;}
+.tl-title{font-size:.84rem;font-weight:700;color:var(--text-1);}
+.tl-text{font-size:.77rem;color:var(--text-2);margin-top:.22rem;line-height:1.6;}
+.tl-pill{display:inline-block;margin-top:.38rem;font-size:.6rem;font-weight:600;padding:.13rem .5rem;border-radius:var(--r-pill);}
+.tl-pill.done{background:rgba(26,140,85,.09);color:var(--green);}
+.tl-pill.a{background:rgba(160,110,0,.09);color:var(--amber);}
+.tl-pill.b{background:rgba(43,130,220,.09);color:var(--accent-2);}
+.tl-pill.r{background:rgba(192,58,43,.07);color:var(--red);}
 
-/* CHECKLIST */
-.checklist{display:flex;flex-direction:column;gap:.5rem;margin-top:.75rem;}
-.chk{display:flex;gap:.65rem;align-items:flex-start;padding:.65rem .8rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-sm);}
-.chk-box{width:20px;height:20px;border-radius:5px;border:2px solid var(--border-s);background:var(--surface-3);flex-shrink:0;margin-top:1px;}
-.chk.done .chk-box{background:rgba(26,140,85,.12);border-color:rgba(26,140,85,.3);}
-.chk-text{font-size:.8rem;color:var(--text-2);line-height:1.5;}
-.chk-text strong{color:var(--text-1);}
+/* ─── CHECKLIST ─── */
+.chklist{display:flex;flex-direction:column;gap:.4rem;}
+.chi{display:flex;gap:.6rem;align-items:flex-start;padding:.6rem .8rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-sm);}
+.chi-box{width:16px;height:16px;border-radius:4px;border:1.5px solid var(--border-m);background:var(--surface-2);flex-shrink:0;margin-top:1px;}
+.chi-text{font-size:.78rem;color:var(--text-2);line-height:1.5;}
+.chi-text strong{color:var(--text-1);}
 
-/* START HERE / PILOT */
-.pilot-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;}
-.pilot-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1.3rem;box-shadow:var(--sh-sm);position:relative;overflow:hidden;}
-.pilot-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
-.pilot-card.p1::before{background:var(--green);}
-.pilot-card.p2::before{background:var(--accent-2);}
-.pilot-card.p3::before{background:var(--purple);}
-.pilot-phase{font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text-3);margin-bottom:.4rem;}
-.pilot-card h3{font-size:.9rem;font-weight:700;color:var(--text-1);margin-bottom:.4rem;}
-.pilot-card p{font-size:.8rem;color:var(--text-2);line-height:1.6;}
-.pilot-card ul{font-size:.78rem;color:var(--text-2);padding-left:1.1rem;margin-top:.4rem;line-height:1.7;}
-.pilot-time{margin-top:.7rem;font-size:.65rem;font-weight:600;color:var(--text-3);}
+/* ─── PILOT CARDS ─── */
+.pilot-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.9rem;}
+.pc{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1.2rem;box-shadow:var(--sh);border-top:3px solid transparent;}
+.pc.p1{border-top-color:var(--green);}
+.pc.p2{border-top-color:var(--accent-2);}
+.pc.p3{border-top-color:var(--purple);}
+.pc-phase{font-size:.58rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text-3);margin-bottom:.3rem;}
+.pc h3{font-size:.88rem;font-weight:700;color:var(--text-1);margin-bottom:.35rem;}
+.pc ul{font-size:.76rem;color:var(--text-2);padding-left:1rem;line-height:1.7;margin:.35rem 0;}
+.pc-out{font-size:.72rem;color:var(--text-2);line-height:1.5;margin-top:.4rem;padding-top:.4rem;border-top:1px solid var(--border);}
+.pc-time{font-size:.62rem;color:var(--text-3);margin-top:.3rem;}
 
-/* CHANGE MGMT */
-.change-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
-.change-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1.2rem;box-shadow:var(--sh-sm);}
-.change-card h4{font-size:.85rem;font-weight:700;color:var(--text-1);margin-bottom:.5rem;}
-.change-card ul{font-size:.8rem;color:var(--text-2);padding-left:1.1rem;line-height:1.75;}
+/* ─── CHANGE MGMT ─── */
+.cm-grid{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;}
+.cm{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1.1rem;box-shadow:var(--sh);}
+.cm h4{font-size:.82rem;font-weight:700;color:var(--text-1);margin-bottom:.4rem;}
+.cm ul{font-size:.76rem;color:var(--text-2);padding-left:1rem;line-height:1.75;}
 
-/* FOOTER */
-footer{border-top:1px solid var(--border);padding:2rem 1.5rem;text-align:center;font-size:.7rem;color:var(--text-3);line-height:1.7;}
+/* ─── ONPREM ─── */
+.onprem{display:flex;gap:.9rem;align-items:flex-start;background:rgba(107,63,160,.04);border:1px solid rgba(107,63,160,.18);border-radius:var(--r);padding:1.1rem 1.3rem;margin-bottom:1.25rem;}
+.onprem-icon{font-size:1.5rem;flex-shrink:0;}
+.onprem-title{font-size:.84rem;font-weight:700;color:var(--purple);margin-bottom:.22rem;}
+.onprem-body{font-size:.79rem;color:var(--text-2);line-height:1.6;}
+
+/* ─── CASE STUDY ─── */
+.case{background:rgba(26,140,85,.03);border:1px solid rgba(26,140,85,.18);border-radius:var(--r);padding:1.25rem 1.4rem;}
+.case-label{font-size:.58rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--green);margin-bottom:.4rem;}
+.case-title{font-size:.9rem;font-weight:700;color:var(--text-1);margin-bottom:.5rem;}
+.case-body{font-size:.8rem;color:var(--text-2);line-height:1.65;}
+.case-stats{display:flex;gap:.75rem;margin-top:.8rem;flex-wrap:wrap;}
+.cs{background:rgba(255,255,255,.8);border:1px solid rgba(26,140,85,.15);border-radius:var(--r-sm);padding:.6rem .8rem;text-align:center;}
+.cs-n{font-size:1.3rem;font-weight:800;color:var(--green);}
+.cs-l{font-size:.62rem;color:var(--text-3);margin-top:.1rem;}
+
+/* ─── FOOTER ─── */
+footer{border-top:1px solid var(--border);padding:2rem clamp(1rem,4vw,2rem);text-align:center;font-size:.68rem;color:var(--text-3);line-height:1.75;}
 footer strong{color:var(--text-2);}
 
+/* ─── API INFO CARDS ─── */
+.api-grid{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;}
+.api-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1rem;box-shadow:var(--sh);}
+.api-flag{font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-3);margin-bottom:.3rem;}
+.api-name{font-size:.82rem;font-weight:700;color:var(--text-1);margin-bottom:.25rem;}
+.api-body{font-size:.76rem;color:var(--text-2);line-height:1.55;}
+.api-status{display:inline-block;margin-top:.5rem;font-size:.62rem;font-weight:600;padding:.2rem .6rem;border-radius:var(--r-pill);}
+.api-status.live{background:rgba(26,140,85,.09);color:var(--green);}
+.api-status.proxy{background:rgba(43,130,220,.08);color:var(--accent-2);}
+
 @media(max-width:860px){
-  .grid-2,.grid-3,.grid-4,.fail-grid,.arch-grid,.pilot-grid,.change-grid,.sc-diagram,.xsys{grid-template-columns:1fr;}
-  .sc-node::after,.xsys-arrow{display:none;}
-  .proc-flow{flex-direction:column;}
-  .proc-step::after{display:none;}
-  .hero-stats{flex-direction:column;align-items:center;}
+  .grid-2,.grid-3,.grid-4,.fail-grid,.arch-grid,.pilot-grid,.cm-grid,.sc,.api-grid{grid-template-columns:1fr;}
+  .sc-node::after,.gap-conn{display:none;}
+  .flow{flex-direction:column;}
+  .flow-step::after{display:none;}
+  .stat-strip{flex-direction:column;}
 }
 </style>
 </head>
 <body>
 
-<nav class="top-nav">
+<!-- NAV -->
+<nav>
   <div class="nav-brand">
     <div class="nav-mark">GMP</div>
-    <div>
-      <div class="nav-title">AI for GMP Documentation</div>
-      <div class="nav-sub">Practical Guide for Quality Managers</div>
-    </div>
+    <div><div class="nav-name">AI for GMP Documentation</div><div class="nav-sub">Practical Guide · Quality Managers</div></div>
   </div>
   <div class="nav-links">
-    <a href="#process">GMP Process</a>
+    <a href="#process">Process</a>
     <a href="#supply">Supply Chain</a>
-    <a href="#qms">QMS Science</a>
-    <a href="#ai-tools">AI Tools</a>
-    <a href="#why-fails">Why AI Fails</a>
-    <a href="#architecture">Architecture</a>
+    <a href="#qms">QMS</a>
+    <a href="#tools">AI Tools</a>
+    <a href="#fails">Why AI Fails</a>
+    <a href="#arch">Architecture</a>
     <a href="#regulatory">Regulatory</a>
-    <a href="#start-here">Start Here</a>
+    <a href="#start">Start Here</a>
   </div>
-  <div class="nav-pill">June 2026</div>
+  <div class="nav-date">June 2026</div>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-eyebrow">Evidence-Based · GMP Documentation Intelligence</div>
-  <h1>AI in Pharmaceutical<br><em>GMP Documentation</em><br>What Works — and What Doesn't</h1>
-  <p class="hero-sub">GMP managers spend 40–60% of their time on document review, correctness checking, and audit preparation. Every AI tool tried has underdelivered. This guide maps the science of GMP documentation workflows, assesses current AI tools honestly, diagnoses the failure modes, and describes the architecture that can actually work — grounded in regulatory science, inspection data, and peer-reviewed evidence.</p>
+  <div class="hero-badge">Evidence-Based · GMP Documentation Intelligence</div>
+  <h1>AI in GMP Documentation:<br><span>What Works — and What Doesn't</span></h1>
+  <p class="hero-sub">QA managers spend 40–60% of their time on document review, CAPA writing, and audit preparation. Every AI tool tried has underdelivered. Here's why — and what the architecture that actually works looks like.</p>
 
-  <!-- AUTOMATION BIAS BANNER — elevated to hero as most critical insight -->
-  <div class="container" style="max-width:860px;">
-    <div class="bias-banner" style="margin-top:2rem;text-align:left;">
-      <div class="bias-banner-icon">⚠️</div>
-      <div>
-        <h3>The Most Dangerous AI Risk in GMP: Automation Bias</h3>
-        <p>Research shows QA reviewers apply <strong>less critical scrutiny to AI-generated output that looks complete and authoritative</strong> — even when it contains errors of omission. An AI-drafted procedure can silently omit a required validation step with no visible signal that anything is missing. In a zero-tolerance GMP environment, a plausible-looking wrong answer is more dangerous than no answer at all. This is the core reason existing AI tools have failed — and it defines what a compliant tool must guard against by design.</p>
-        <div class="cite">Source: ISPE Pharmaceutical Engineering "What You're Not Told by AI" (2026); PDA J Pharm Sci Tech pdajpst.2025-000076.1 (Feb 2026)</div>
-      </div>
+  <div class="alert-banner">
+    <div class="alert-icon">⚠️</div>
+    <div>
+      <div class="alert-title">The Most Dangerous AI Risk in GMP: Automation Bias</div>
+      <div class="alert-body">Reviewers apply less scrutiny to AI output that <em>looks</em> complete. An AI-drafted procedure can silently omit a required validation step with no visible signal. In a zero-tolerance GMP environment, <strong>a plausible-looking wrong answer is more dangerous than no answer at all.</strong></div>
+      <div class="alert-cite">ISPE Pharmaceutical Engineering 2026 · PDA J Pharm Sci Tech pdajpst.2025-000076.1</div>
     </div>
   </div>
 
-  <div class="hero-stats">
-    <div class="hero-stat">
-      <div class="hero-stat-num red">65–70%</div>
-      <div class="hero-stat-label">GMP audit observations linked to documentation &amp; data integrity gaps</div>
-      <div class="hero-cite">Zamann Pharma / MHRA analysis 2025–2026</div>
-    </div>
-    <div class="hero-stat">
-      <div class="hero-stat-num amber">303</div>
-      <div class="hero-stat-label">FDA drug warning letters FY2025 — 59% year-over-year jump</div>
-      <div class="hero-cite">Certainty Software 2026</div>
-    </div>
-    <div class="hero-stat">
-      <div class="hero-stat-num amber">40%</div>
-      <div class="hero-stat-label">EMA critical &amp; major GMP deficiencies linked to data integrity failures (2016–2023)</div>
-      <div class="hero-cite">MHRA inspection data 2016–2023</div>
-    </div>
-    <div class="hero-stat">
-      <div class="hero-stat-num">2–4 wks</div>
-      <div class="hero-stat-label">Analyst time per Annual Product Quality Review — per product, per year</div>
-      <div class="hero-cite">Industry benchmark, GMP SOP.com</div>
-    </div>
-    <div class="hero-stat">
-      <div class="hero-stat-num green">$3.85B</div>
-      <div class="hero-stat-label">Pharma QMS software market by 2030 (13% CAGR)</div>
-      <div class="hero-cite">Mordor Intelligence 2024</div>
-    </div>
+  <div class="stat-strip" style="max-width:1080px;margin:1.5rem auto 0;">
+    <div class="stat-item"><div class="stat-n r">65–70%</div><div class="stat-t">GMP audit observations linked to documentation &amp; data integrity</div><div class="stat-src">Zamann Pharma / MHRA 2026</div></div>
+    <div class="stat-item"><div class="stat-n a">303</div><div class="stat-t">FDA drug warning letters FY2025 — 59% jump year-over-year</div><div class="stat-src">Certainty Software 2026</div></div>
+    <div class="stat-item"><div class="stat-n a">40%</div><div class="stat-t">EMA critical GMP deficiencies linked to data integrity failures (2016–2023)</div><div class="stat-src">MHRA inspection data</div></div>
+    <div class="stat-item"><div class="stat-n b">2–4 wks</div><div class="stat-t">Analyst time per Annual Product Quality Review, per product</div><div class="stat-src">Industry benchmark</div></div>
+    <div class="stat-item"><div class="stat-n g">$3.85B</div><div class="stat-t">Pharma QMS market by 2030 (13% CAGR)</div><div class="stat-src">Mordor Intelligence 2024</div></div>
   </div>
 </section>
-<hr class="divider">
 
-<!-- SECTION 1: PROCESS -->
+<!-- S1: PROCESS -->
 <section class="section" id="process">
-  <div class="container">
-    <div class="sec-label">01 — The Manufacturing Process</div>
-    <div class="sec-title">GMP Documentation Across the Pharmaceutical Manufacturing Chain</div>
-    <p class="sec-sub">Every stage of pharmaceutical manufacturing generates mandatory GMP documentation. The document burden grows with process complexity — biologics, sterile injectables, and controlled substances carry the highest load. Understanding <em>where</em> each document type is generated is the starting point for understanding where AI can and cannot help.</p>
+  <div class="wrap">
+    <div class="sec-hd">
+      <div class="sec-kicker"><div class="sec-num">1</div><div class="sec-label">The Manufacturing Process</div></div>
+      <div class="sec-title">Where GMP Documents Are Generated</div>
+      <div class="sec-sub">Every stage of pharma manufacturing generates mandatory records. The batch record review step is the primary manual bottleneck — 4–8 hours per batch, 100% manual.</div>
+    </div>
 
-    <div class="process-diagram" style="margin-bottom:1.25rem;">
-      <p style="font-size:.63rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text-3);margin-bottom:1.1rem;">Pharmaceutical Manufacturing — GMP Documentation Points</p>
-      <div class="proc-flow">
-        <div class="proc-step">
-          <div class="proc-box">
-            <div class="proc-icon">⚗️</div>
-            <div class="proc-name">API Synthesis</div>
-            <div class="proc-sub">Active Pharmaceutical Ingredient (ICH Q7)</div>
-            <div class="proc-docs">
-              <span class="proc-doc">Synthesis batch record</span>
-              <span class="proc-doc">Supplier CoA</span>
-              <span class="proc-doc">In-process testing</span>
-              <span class="proc-doc red">Process deviation</span>
-            </div>
-          </div>
-        </div>
-        <div class="proc-step">
-          <div class="proc-box highlight">
-            <div class="proc-icon">🔬</div>
-            <div class="proc-name">Formulation &amp; Drug Product</div>
-            <div class="proc-sub">Compounding, filling (21 CFR 211)</div>
-            <div class="proc-docs">
-              <span class="proc-doc">Batch Manufacturing Record</span>
-              <span class="proc-doc">Equipment log</span>
-              <span class="proc-doc">Cleaning validation</span>
-              <span class="proc-doc red">Deviation + CAPA</span>
-            </div>
-          </div>
-        </div>
-        <div class="proc-step">
-          <div class="proc-box">
-            <div class="proc-icon">🧪</div>
-            <div class="proc-name">QC Testing &amp; Lab</div>
-            <div class="proc-sub">Identity, purity, potency, sterility</div>
-            <div class="proc-docs">
-              <span class="proc-doc">Lab notebook / ELN</span>
-              <span class="proc-doc">CoA / CoT</span>
-              <span class="proc-doc red">OOS investigation</span>
-              <span class="proc-doc">Stability reports</span>
-            </div>
-          </div>
-        </div>
-        <div class="proc-step">
-          <div class="proc-box warning">
-            <div class="proc-icon">📋</div>
-            <div class="proc-name">Batch Record Review</div>
-            <div class="proc-sub"><strong>Primary manual bottleneck</strong></div>
-            <div class="proc-docs">
-              <span class="proc-doc red">Full BMR (4–8 hrs)</span>
-              <span class="proc-doc red">Cross-ref vs. MBR</span>
-              <span class="proc-doc red">Deviation resolution</span>
-              <span class="proc-doc red">QP / QA sign-off</span>
-            </div>
-          </div>
-        </div>
-        <div class="proc-step">
-          <div class="proc-box">
-            <div class="proc-icon">🚚</div>
-            <div class="proc-name">Distribution &amp; Pharmacovigilance</div>
-            <div class="proc-sub">GDP, cold chain, adverse events</div>
-            <div class="proc-docs">
-              <span class="proc-doc">Distribution records</span>
-              <span class="proc-doc">AE reports</span>
-              <span class="proc-doc red">Annual APQR</span>
-            </div>
-          </div>
-        </div>
+    <div class="flow-wrap" style="margin-bottom:1.25rem;">
+      <p style="font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text-3);margin-bottom:1rem;">Pharmaceutical Manufacturing — GMP Documentation Points</p>
+      <div class="flow">
+        <div class="flow-step"><div class="flow-box"><div class="flow-icon">⚗️</div><div class="flow-name">API Synthesis</div><div class="flow-sub">ICH Q7 · Active Pharmaceutical Ingredient</div><div class="flow-tags"><span class="tag">Synthesis batch record</span><span class="tag">Supplier CoA</span><span class="tag r">Process deviation</span></div></div></div>
+        <div class="flow-step"><div class="flow-box hi"><div class="flow-icon">🔬</div><div class="flow-name">Formulation</div><div class="flow-sub">21 CFR 211 · Compounding, filling</div><div class="flow-tags"><span class="tag">Batch Mfr. Record</span><span class="tag">Equipment log</span><span class="tag r">Deviation + CAPA</span></div></div></div>
+        <div class="flow-step"><div class="flow-box"><div class="flow-icon">🧪</div><div class="flow-name">QC Testing</div><div class="flow-sub">Identity, purity, potency, sterility</div><div class="flow-tags"><span class="tag">CoA / CoT</span><span class="tag r">OOS investigation</span><span class="tag">Stability report</span></div></div></div>
+        <div class="flow-step"><div class="flow-box crit"><div class="flow-icon">📋</div><div class="flow-name">Batch Record Review</div><div class="flow-sub">⚡ Primary manual bottleneck</div><div class="flow-tags"><span class="tag r">Full BMR (4–8 hrs)</span><span class="tag r">Cross-ref vs. MBR</span><span class="tag r">QP sign-off</span></div></div></div>
+        <div class="flow-step"><div class="flow-box"><div class="flow-icon">🚚</div><div class="flow-name">Distribution</div><div class="flow-sub">GDP, cold chain, pharmacovigilance</div><div class="flow-tags"><span class="tag">GDP records</span><span class="tag">AE reports</span><span class="tag r">Annual APQR</span></div></div></div>
       </div>
     </div>
 
-    <!-- PAPER/HYBRID CALLOUT — new -->
-    <div class="callout amber">
-      <h4>🗂 Paper &amp; Hybrid Environments: The Unaddressed Reality</h4>
-      <p>Most AI GMP tools implicitly assume fully digital, structured records. In practice, <strong>the majority of global pharmaceutical sites — including legacy lines at large multinationals — operate on paper batch records, partially scanned PDFs, or hybrid paper-electronic systems.</strong> A biologic drug substance line commissioned in 2005 may have its BMR as a 200-page handwritten PDF scan. Any AI pre-read tool must handle OCR extraction of handwritten entries, tabular data embedded in scanned images, and signature fields that are visual artifacts — not structured data. Vendors that can only process native digital records address a fraction of the real-world footprint. Ask specifically: does this tool work on scanned paper BMRs?</p>
-      <p style="margin-top:.4rem;font-size:.8rem;color:var(--text-2)"><strong>Technical requirement:</strong> Document intelligence platform (Azure Document Intelligence, AWS Textract, or equivalent) as a pre-processing layer before the QMS AI. Structured extraction from mixed handwritten/typed PDFs is a solved — but often omitted — step.</p>
-    </div>
-
-    <div class="callout">
-      <h4>ICH Q10: The Regulatory Framework for Pharmaceutical Quality Systems</h4>
-      <p>ICH Q10 (adopted 2008–2009, harmonized across FDA, EMA, PMDA) defines the Pharmaceutical Quality System spanning the full product lifecycle. Its two critical "enablers" — <strong>Knowledge Management</strong> and <strong>Quality Risk Management</strong> (ICH Q9) — remain largely manual in practice. These are precisely the workflows where document intelligence AI adds value without violating GMP determinism requirements.
-      <span style="display:block;margin-top:.3rem;font-size:.68rem;color:var(--text-3)">Source: ICH Q10 Guideline; EMA Step 5 guidance; FDA Q10 Guidance for Industry</span></p>
+    <div class="grid-2">
+      <div class="note warn">
+        <div class="note-label">🗂 Paper &amp; Hybrid Environments</div>
+        <div class="note-text">Most AI GMP tools assume fully digital records. In practice, <strong>legacy biologics lines still run paper BMRs — 200-page handwritten PDF scans.</strong> Any tool that cannot process scanned documents via OCR (Azure Document Intelligence / AWS Textract) addresses only a fraction of real-world sites. Always ask vendors: <em>"Does this work on scanned paper BMRs?"</em></div>
+      </div>
+      <div class="note">
+        <div class="note-label">📐 ICH Q10 Framework</div>
+        <div class="note-text">ICH Q10 defines the Pharmaceutical Quality System spanning the full lifecycle. Its two enablers — <strong>Knowledge Management</strong> and <strong>Quality Risk Management</strong> (ICH Q9) — remain largely manual. These are exactly the workflows where document AI adds value without violating GMP determinism requirements.</div>
+      </div>
     </div>
   </div>
 </section>
-<hr class="divider">
 
-<!-- SECTION 2: SUPPLY CHAIN -->
+<!-- S2: SUPPLY CHAIN -->
 <section class="section" id="supply">
-  <div class="container">
-    <div class="sec-label">02 — Supply Chain Complexity</div>
-    <div class="sec-title">GMP Documentation Across the Pharma Supply Chain</div>
-    <p class="sec-sub">Modern pharmaceutical manufacturing is rarely performed by a single organization. Each contract manufacturer (CMO/CDMO) adds a documentation layer the sponsor must oversee — yet traceability must function bidirectionally from raw material suppliers through to released batches reaching patients.</p>
+  <div class="wrap">
+    <div class="sec-hd">
+      <div class="sec-kicker"><div class="sec-num">2</div><div class="sec-label">Supply Chain</div></div>
+      <div class="sec-title">Documentation Across the Pharma Supply Chain</div>
+      <div class="sec-sub">Sponsors are responsible for GMP compliance at all CMO sites. Sanofi manages 12,000+ CMOs across 14 languages — each adds a documentation layer that must be reviewed, reconciled, and integrated.</div>
+    </div>
 
-    <div class="process-diagram" style="margin-bottom:1.25rem;">
-      <p style="font-size:.63rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text-3);margin-bottom:1.1rem;">Pharmaceutical Supply Chain — Documentation Obligations</p>
-      <div class="sc-diagram">
-        <div class="sc-node">
-          <div class="sc-icon">⛏️</div>
-          <div class="sc-name">Raw Material Supplier</div>
-          <div class="sc-docs">
-            <span class="sc-pill">Qualification dossier</span>
-            <span class="sc-pill">CoA / CoT</span>
-            <span class="sc-pill red">Audit report</span>
-          </div>
-        </div>
-        <div class="sc-node">
-          <div class="sc-icon">🏭</div>
-          <div class="sc-name">API Manufacturer (CMO)</div>
-          <div class="sc-docs">
-            <span class="sc-pill">Quality agreement</span>
-            <span class="sc-pill">Batch records</span>
-            <span class="sc-pill red">GMP certificate</span>
-          </div>
-        </div>
-        <div class="sc-node core">
-          <div class="sc-icon">🏢</div>
-          <div class="sc-name">Drug Product Mfr. (Sponsor)</div>
-          <div class="sc-docs">
-            <span class="sc-pill">BMR / MBR</span>
-            <span class="sc-pill red">Deviation/CAPA</span>
-            <span class="sc-pill">Change control</span>
-          </div>
-        </div>
-        <div class="sc-node">
-          <div class="sc-icon">📦</div>
-          <div class="sc-name">Fill &amp; Finish / Packager</div>
-          <div class="sc-docs">
-            <span class="sc-pill">Packaging batch record</span>
-            <span class="sc-pill">Label reconciliation</span>
-            <span class="sc-pill red">Yield deviation</span>
-          </div>
-        </div>
-        <div class="sc-node">
-          <div class="sc-icon">🌐</div>
-          <div class="sc-name">Distribution &amp; Market</div>
-          <div class="sc-docs">
-            <span class="sc-pill">GDP records</span>
-            <span class="sc-pill">Cold chain log</span>
-            <span class="sc-pill red">Complaint + AE</span>
-          </div>
-        </div>
+    <div class="flow-wrap" style="margin-bottom:1.25rem;">
+      <p style="font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text-3);margin-bottom:1rem;">Supply Chain — Documentation Obligations</p>
+      <div class="sc">
+        <div class="sc-node"><div class="sc-icon">⛏️</div><div class="sc-name">Raw Material Supplier</div><div class="sc-tags"><span class="sc-tag">Qualification dossier</span><span class="sc-tag">CoA / CoT</span><span class="sc-tag r">Audit report</span></div></div>
+        <div class="sc-node"><div class="sc-icon">🏭</div><div class="sc-name">API Manufacturer (CMO)</div><div class="sc-tags"><span class="sc-tag">Quality agreement</span><span class="sc-tag">Batch records</span><span class="sc-tag r">GMP certificate</span></div></div>
+        <div class="sc-node core"><div class="sc-icon">🏢</div><div class="sc-name">Sponsor (Drug Product Mfr.)</div><div class="sc-tags"><span class="sc-tag">BMR / MBR</span><span class="sc-tag r">Deviation/CAPA</span><span class="sc-tag">Change control</span></div></div>
+        <div class="sc-node"><div class="sc-icon">📦</div><div class="sc-name">Fill &amp; Finish / Packager</div><div class="sc-tags"><span class="sc-tag">Packaging batch record</span><span class="sc-tag">Label reconciliation</span><span class="sc-tag r">Yield deviation</span></div></div>
+        <div class="sc-node"><div class="sc-icon">🌐</div><div class="sc-name">Distribution &amp; Market</div><div class="sc-tags"><span class="sc-tag">GDP records</span><span class="sc-tag r">AE reports</span><span class="sc-tag r">Annual APQR</span></div></div>
       </div>
     </div>
 
-    <!-- CROSS-SYSTEM GAP — new -->
-    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1.5rem;box-shadow:var(--sh-sm);margin-bottom:1.25rem;">
-      <p style="font-size:.63rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text-3);margin-bottom:1rem;">The Cross-System Integration Gap — Where AI Traceability Actually Breaks</p>
-      <div class="xsys">
-        <div class="xsys-box">
-          <div style="font-size:1.2rem;margin-bottom:.3rem;">🏭</div>
-          <div class="xsys-label">CMO System</div>
-          <div class="xsys-sub">Pilgrim SmartSolve / local QMS / paper</div>
-        </div>
-        <div class="xsys-arrow red">✗<br><span style="font-size:.58rem;display:block;color:var(--red)">no bridge</span></div>
-        <div class="xsys-box gap">
-          <div style="font-size:1.2rem;margin-bottom:.3rem;">🔴</div>
-          <div class="xsys-label" style="color:var(--red)">Integration Gap</div>
-          <div class="xsys-sub">CMO records never enter sponsor QMS — manual PDF transfer, email, portal upload</div>
-        </div>
-        <div class="xsys-arrow red">✗<br><span style="font-size:.58rem;display:block;color:var(--red)">no bridge</span></div>
-        <div class="xsys-box">
-          <div style="font-size:1.2rem;margin-bottom:.3rem;">🏢</div>
-          <div class="xsys-label">Sponsor Systems</div>
-          <div class="xsys-sub">Veeva Vault + Documentum + SAP QM</div>
-        </div>
+    <!-- Cross-system gap -->
+    <div class="card" style="margin-bottom:1rem;">
+      <div class="card-title">🔌 The Cross-System Integration Gap — Where AI Traceability Breaks</div>
+      <div class="gap-row">
+        <div class="gap-box"><div class="gap-box-label">🏭 CMO System</div><div class="gap-box-sub">Pilgrim SmartSolve / local QMS / paper records</div></div>
+        <div class="gap-conn x">✗<br><span style="font-size:.55rem;display:block;margin-top:.2rem;">no bridge</span></div>
+        <div class="gap-box broken"><div class="gap-box-label" style="color:var(--red)">🔴 Documentation Gap</div><div class="gap-box-sub">CMO records arrive as PDF email attachments — never enter the sponsor's QMS automatically</div></div>
+        <div class="gap-conn x">✗<br><span style="font-size:.55rem;display:block;margin-top:.2rem;">no bridge</span></div>
+        <div class="gap-box"><div class="gap-box-label">🏢 Sponsor Systems</div><div class="gap-box-sub">Veeva Vault + Documentum D2 + SAP QM</div></div>
       </div>
-      <p style="font-size:.8rem;color:var(--text-2);line-height:1.65;margin-top:1rem;">The most acute documentation burden is not <em>inside</em> a company's QMS — it's at the boundary between systems. CMO batch records arrive as PDF attachments. Quality agreements live in Documentum. API release decisions are tracked in SAP QM. Deviation history is in Veeva Vault. No AI tool currently bridges all of these — and an AI that only reads documents already inside your QMS misses the majority of the cross-reference problem. <strong>Any AI evaluation must specify which system(s) it ingests.</strong>
-      <span style="display:block;margin-top:.35rem;font-size:.65rem;color:var(--text-3)">Source: Sanofi QualiPSO program, 2022; ICH Q10 §3.2 supplier management requirements; ComplianceOnline CMO oversight guidance</span></p>
+      <div class="note danger" style="margin-top:.75rem;">
+        <div class="note-label">Key Implication</div>
+        <div class="note-text">An AI that only reads documents already inside your QMS misses the majority of the cross-reference problem. Any vendor evaluation must specify <strong>which systems the AI ingests</strong> — not just "your controlled documents."</div>
+      </div>
     </div>
 
-    <div class="callout">
-      <h4>The Low-Quality Corpus Problem</h4>
-      <p>RAG-based AI is only as good as the documents it indexes. Most pharmaceutical QMS systems contain years of inconsistently written CAPAs, partially migrated legacy records, and decommissioned-system data with known gaps. <strong>Training or indexing an AI on a low-quality document corpus produces confidently wrong answers</strong> — the system finds the closest match in its index and presents it as authoritative guidance. Before deploying document intelligence AI, a corpus quality assessment is required: identify incomplete records, flag inconsistencies, and establish a minimum data quality baseline. This is not an AI problem — it is a prerequisite data governance step.</p>
+    <div class="note warn">
+      <div class="note-label">⚗️ Low-Quality Corpus Problem</div>
+      <div class="note-text">RAG systems are only as good as the documents they index. Years of inconsistently written CAPAs, migration gaps, and decommissioned-system artifacts produce <strong>confidently wrong answers</strong> — drawn from your own flawed records. A corpus quality assessment is a prerequisite, not an afterthought.</div>
     </div>
   </div>
 </section>
-<hr class="divider">
 
-<!-- SECTION 3: QMS SCIENCE -->
+<!-- S3: QMS -->
 <section class="section" id="qms">
-  <div class="container">
-    <div class="sec-label">03 — QMS Science &amp; Document Architecture</div>
-    <div class="sec-title">The GMP Document Hierarchy — What Gets Reviewed and Why It's Hard</div>
-    <p class="sec-sub">GMP documentation follows a strict hierarchy defined by 21 CFR Parts 210/211 (US), EU GMP Annex 11 (EU), and ICH Q10. Every level must be controlled, versioned, reviewed, and cross-referenced. Changes at any level cascade downward. The sheer volume and interdependency is the core of the manual burden.</p>
+  <div class="wrap">
+    <div class="sec-hd">
+      <div class="sec-kicker"><div class="sec-num">3</div><div class="sec-label">QMS Science</div></div>
+      <div class="sec-title">The GMP Document Hierarchy &amp; Daily Workflow</div>
+      <div class="sec-sub">Six levels of controlled documentation — every change cascades downward. The daily review cycle is manual, cross-system, and inspection-critical.</div>
+    </div>
 
-    <div class="grid-2" style="gap:2rem;align-items:start">
+    <div class="grid-2" style="gap:1.5rem;align-items:start;">
       <div>
-        <div class="qms-pyramid">
-          <div class="qms-level"><div class="qms-level-num">L1</div><div><div class="qms-level-name">Quality Manual &amp; Policy</div><div class="qms-level-desc">Site Master File, GMP policy. Reviewed annually.</div></div><span class="qms-level-vol vol-low">Low volume</span></div>
-          <div class="qms-level"><div class="qms-level-num l2">L2</div><div><div class="qms-level-name">Standard Operating Procedures</div><div class="qms-level-desc">Manufacturing, cleaning, testing, environmental monitoring.</div></div><span class="qms-level-vol vol-med">Hundreds per site</span></div>
-          <div class="qms-level"><div class="qms-level-num l3">L3</div><div><div class="qms-level-name">Work Instructions &amp; Specifications</div><div class="qms-level-desc">Step-by-step instructions, in-process limits, acceptance criteria.</div></div><span class="qms-level-vol vol-high">Thousands</span></div>
-          <div class="qms-level"><div class="qms-level-num l4">L4</div><div><div class="qms-level-name">Batch Manufacturing Records</div><div class="qms-level-desc">Per-batch records: materials, parameters, testing, operator signatures. 50–200+ pages each.</div></div><span class="qms-level-vol vol-high">Every batch</span></div>
-          <div class="qms-level"><div class="qms-level-num l5">L5</div><div><div class="qms-level-name">Deviations, CAPAs, Change Controls</div><div class="qms-level-desc">Non-conformances, root cause investigations, corrective actions, change assessments.</div></div><span class="qms-level-vol vol-high">Continuous flow</span></div>
-          <div class="qms-level"><div class="qms-level-num l6">L6</div><div><div class="qms-level-name">Annual Product Quality Reviews</div><div class="qms-level-desc">Trend analysis per product: batch data, deviations, complaints, stability, CAPA status.</div></div><span class="qms-level-vol vol-med">1 per product/year</span></div>
+        <p style="font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text-3);margin-bottom:.65rem;">Document Hierarchy — ICH Q10 / 21 CFR 211</p>
+        <div class="levels">
+          <div class="level"><div class="lbadge" style="background:var(--accent);">L1</div><div><div class="lname">Quality Manual &amp; Policy</div><div class="ldesc">Site Master File, GMP policy — reviewed annually</div></div><span class="lvol" style="background:rgba(26,140,85,.08);color:var(--green);">Low</span></div>
+          <div class="level"><div class="lbadge" style="background:var(--accent-2);">L2</div><div><div class="lname">Standard Operating Procedures</div><div class="ldesc">Manufacturing, cleaning, testing, EHS — hundreds per site</div></div><span class="lvol" style="background:rgba(160,110,0,.08);color:var(--amber);">Medium</span></div>
+          <div class="level"><div class="lbadge" style="background:var(--purple);">L3</div><div><div class="lname">Work Instructions &amp; Specifications</div><div class="ldesc">Step-by-step process instructions, in-process limits</div></div><span class="lvol" style="background:rgba(192,58,43,.07);color:var(--red);">Thousands</span></div>
+          <div class="level"><div class="lbadge" style="background:var(--green);">L4</div><div><div class="lname">Batch Manufacturing Records</div><div class="ldesc">Per-batch: materials, parameters, operator signatures — 50–200 pages</div></div><span class="lvol" style="background:rgba(192,58,43,.07);color:var(--red);">Every batch</span></div>
+          <div class="level"><div class="lbadge" style="background:var(--amber);">L5</div><div><div class="lname">Deviations, CAPAs, Change Controls</div><div class="ldesc">Non-conformances, root cause investigations, corrective actions</div></div><span class="lvol" style="background:rgba(192,58,43,.07);color:var(--red);">Continuous</span></div>
+          <div class="level"><div class="lbadge" style="background:var(--red);">L6</div><div><div class="lname">Annual Product Quality Reviews</div><div class="ldesc">Year-end trend analysis per product — 2–4 analyst-weeks each</div></div><span class="lvol" style="background:rgba(160,110,0,.08);color:var(--amber);">1/yr/product</span></div>
+        </div>
+        <div class="note" style="margin-top:.9rem;">
+          <div class="note-label">ALCOA+ Standard</div>
+          <div class="note-text">Every GMP record must be <strong>Attributable, Legible, Contemporaneous, Original, Accurate</strong> — plus Complete, Consistent, Enduring, Available. MHRA found ALCOA+ failures in 40% of all critical/major deficiencies (2016–2023).</div>
         </div>
       </div>
       <div>
-        <h3 style="font-size:.95rem;font-weight:700;margin-bottom:.9rem;color:var(--text-1)">The Day-to-Day Documentation Workflow</h3>
-        <div class="workflow">
-          <div class="wf-step">
-            <div class="wf-dot hot">📋</div>
-            <div class="wf-body">
-              <div class="wf-title">Batch Record Review (BRR)</div>
-              <div class="wf-desc">QA reviewer reads the entire BMR, cross-checks every entry against the approved Master Batch Record, verifies in-process results, confirms ALCOA+ compliance, identifies deviations. Often requires a second independent review.</div>
-              <span class="wf-badge red">4–8 hours per batch · 100% manual · primary bottleneck</span>
-            </div>
-          </div>
-          <div class="wf-step">
-            <div class="wf-dot hot">⚠️</div>
-            <div class="wf-body">
-              <div class="wf-title">Deviation Investigation</div>
-              <div class="wf-desc">Root cause analysis requires locating 10–30 related documents (SOPs, prior deviations, change controls) across multiple systems. Regulatory guidance expects prior similar deviations to be systematically reviewed — a cross-system semantic search problem.</div>
-              <span class="wf-badge red">Cross-reference intensive · spans Veeva + SAP + Documentum</span>
-            </div>
-          </div>
-          <div class="wf-step">
-            <div class="wf-dot hot">🔧</div>
-            <div class="wf-body">
-              <div class="wf-title">CAPA Writing &amp; Tracking</div>
-              <div class="wf-desc">CAPAs must use regulatory-ready language, specify measurable actions, assign owners, and include effectiveness criteria. Written manually — often under-specified, generating repeat deviations. Repeat CAPA is a top inspection finding.</div>
-              <span class="wf-badge red">High failure rate — repeat CAPA = top FDA 483 observation</span>
-            </div>
-          </div>
-          <div class="wf-step">
-            <div class="wf-dot warn">📝</div>
-            <div class="wf-body">
-              <div class="wf-title">SOP Revision &amp; Change Control</div>
-              <div class="wf-desc">Any procedural change triggers impact assessment across all related documents, active batch records, and regulatory filings. Manual cross-reference exercise across the entire document tree.</div>
-              <span class="wf-badge amber">Impact assessment still manual in all current QMS platforms</span>
-            </div>
-          </div>
-          <div class="wf-step">
-            <div class="wf-dot ok">📊</div>
-            <div class="wf-body">
-              <div class="wf-title">APQR Compilation</div>
-              <div class="wf-desc">Aggregates a full year of batch data, deviations, complaints, OOS results, change controls, and stability into a trend analysis report. For large portfolios (Sanofi: hundreds of products), this is a months-long exercise consuming QA analyst capacity from Q4 through Q1.</div>
-              <span class="wf-badge amber">2–4 analyst-weeks per product · 95% is data gathering</span>
-            </div>
-          </div>
-        </div>
-        <div class="callout amber" style="margin-top:1.1rem">
-          <h4>ALCOA+ — The Correctness Standard Every Record Must Meet</h4>
-          <p><strong>Attributable, Legible, Contemporaneous, Original, Accurate</strong> — plus Complete, Consistent, Enduring, and Available. Failing any criterion is an inspectable violation. Between 2016–2023, MHRA found ALCOA+ failures in nearly 40% of all critical and major GMP deficiencies.
-          <span style="display:block;margin-top:.28rem;font-size:.65rem;color:var(--text-3)">Source: MHRA Inspection Data 2016–2023; Zamann Pharma Data Integrity Guide 2026</span></p>
+        <p style="font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text-3);margin-bottom:.65rem;">Daily QA Workflow — Where Time Is Lost</p>
+        <div class="wf">
+          <div class="wf-row"><div class="wf-dot r">📋</div><div class="wf-body"><div class="wf-title">Batch Record Review (BRR)</div><div class="wf-desc">Full BMR vs. Master Batch Record, ALCOA+ check, deviation identification. Often two independent reviews required.</div><span class="wf-tag r">4–8 hrs per batch · 100% manual</span></div></div>
+          <div class="wf-row"><div class="wf-dot r">⚠️</div><div class="wf-body"><div class="wf-title">Deviation Investigation</div><div class="wf-desc">Root cause requires locating 10–30 related documents across Veeva, SAP, and Documentum. No semantic search available.</div><span class="wf-tag r">Cross-system · no AI bridge today</span></div></div>
+          <div class="wf-row"><div class="wf-dot r">🔧</div><div class="wf-body"><div class="wf-title">CAPA Writing</div><div class="wf-desc">Regulatory-ready language, measurable actions, effectiveness criteria — written from scratch every time. Repeat CAPA is a top FDA 483 finding.</div><span class="wf-tag r">High failure rate on effectiveness check</span></div></div>
+          <div class="wf-row"><div class="wf-dot a">📝</div><div class="wf-body"><div class="wf-title">SOP Change Control</div><div class="wf-desc">Impact assessment across all related documents and batch records. Manual cross-reference in all current platforms.</div><span class="wf-tag a">Impact assessment still manual</span></div></div>
+          <div class="wf-row"><div class="wf-dot g">📊</div><div class="wf-body"><div class="wf-title">APQR Compilation</div><div class="wf-desc">Aggregates a year of batch data, deviations, complaints, stability. 2–4 analyst-weeks per product — 95% is data gathering.</div><span class="wf-tag g">Highest AI ROI opportunity</span></div></div>
         </div>
       </div>
     </div>
   </div>
 </section>
-<hr class="divider">
 
-<!-- SECTION 4: LIVE DATA -->
+<!-- S4: LIVE DATA -->
 <section class="section" id="live-data">
-  <div class="container">
-    <div class="sec-label">04 — Live Regulatory Intelligence</div>
-    <div class="sec-title">Real-Time GMP Enforcement: What Regulators Are Catching Right Now</div>
-    <p class="sec-sub">Live FDA enforcement data from openFDA. Filter by product type to see which failure modes are most active in your segment. Class I recalls (most serious) frequently trace back to documentation failures — the same types the AI architecture in this guide is designed to prevent.</p>
+  <div class="wrap">
+    <div class="sec-hd">
+      <div class="sec-kicker"><div class="sec-num">4</div><div class="sec-label">Live Regulatory Intelligence</div></div>
+      <div class="sec-title">What Regulators Are Catching Right Now</div>
+      <div class="sec-sub">Live FDA drug enforcement data from openFDA — filtered by product type. Class I recalls frequently trace back to documentation failures: the same types an AI pre-read tool is designed to prevent.</div>
+    </div>
 
-    <div class="grid-2" style="gap:1.5rem;align-items:start">
+    <div class="grid-2" style="gap:1.5rem;align-items:start;">
       <div>
-        <div class="live-feed">
-          <div class="live-feed-header">
-            <div class="live-title"><div class="live-dot"></div>US FDA — Live GMP Drug Enforcement Recalls</div>
-            <div class="live-meta" id="feed-meta">Loading…</div>
+        <div class="feed-wrap">
+          <div class="feed-hdr">
+            <div class="feed-title"><div class="live-dot"></div>US FDA — Drug Enforcement Recalls</div>
+            <div class="feed-meta" id="feed-meta">Loading…</div>
           </div>
           <div class="feed-filters">
-            <button class="feed-filter-btn active" data-query="GMP OR manufacturing OR contamination OR sterility OR data integrity OR labeling" onclick="loadFeed(this)">All GMP</button>
-            <button class="feed-filter-btn" data-query="sterile OR biologics OR aseptic OR biologic OR contamination OR injectable" onclick="loadFeed(this)">Biologics / Sterile</button>
-            <button class="feed-filter-btn" data-query="tablet OR capsule OR granule OR oral OR dissolution OR coating" onclick="loadFeed(this)">Oral Solid</button>
-            <button class="feed-filter-btn" data-query="API OR active pharmaceutical OR synthesis OR impurity OR specification" onclick="loadFeed(this)">API / Impurity</button>
+            <button class="ffbtn on" data-q='GMP OR manufacturing OR contamination OR sterility OR "data integrity"' onclick="loadFeed(this)">All GMP</button>
+            <button class="ffbtn" data-q='sterile OR biologics OR aseptic OR injectable OR contamination' onclick="loadFeed(this)">Biologics / Sterile</button>
+            <button class="ffbtn" data-q='tablet OR capsule OR oral OR coating OR dissolution' onclick="loadFeed(this)">Oral Solid</button>
+            <button class="ffbtn" data-q='API OR "active pharmaceutical" OR impurity OR specification' onclick="loadFeed(this)">API / Impurity</button>
           </div>
-          <div class="live-body" id="feed-body">
-            <div class="feed-loading">⟳ Fetching from api.fda.gov/drug/enforcement…</div>
-          </div>
+          <div class="feed-body" id="feed-body"><div class="feed-spin">⟳ Fetching from api.fda.gov…</div></div>
         </div>
       </div>
       <div>
-        <div class="grid-2" style="margin-bottom:1rem;">
-          <div class="card">
-            <div style="font-size:.63rem;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.45rem">🇺🇸 US — FDA</div>
-            <div class="p-name" style="font-size:.83rem">openFDA Drug Enforcement</div>
-            <p style="margin-top:.35rem">Recalls &amp; enforcement actions 2004–present. Queryable by reason, firm, product. REST API, no key required.</p>
-            <div style="margin-top:.55rem;font-size:.63rem;padding:.22rem .55rem;border-radius:var(--r-pill);background:rgba(26,140,85,.08);color:var(--green);display:inline-block;font-weight:700">✦ Live REST API · api.fda.gov</div>
+        <div class="api-grid" style="margin-bottom:.9rem;">
+          <div class="api-card">
+            <div class="api-flag">🇺🇸 US — FDA</div>
+            <div class="api-name">openFDA Drug Enforcement</div>
+            <div class="api-body">Recalls &amp; enforcement actions 2004–present. REST API, no key required.</div>
+            <span class="api-status live">✦ Live REST API</span>
           </div>
-          <div class="card">
-            <div style="font-size:.63rem;font-weight:700;color:var(--text-3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.45rem">🇪🇺 EU — EMA</div>
-            <div class="p-name" style="font-size:.83rem">EMA GMP Non-Compliance</div>
-            <p style="margin-top:.35rem">EMA publishes GMP non-compliance reports for sites failing inspection. Key resource for EU-market manufacturers. Accessible via EMA portal and Europe PMC.</p>
-            <div style="margin-top:.55rem;font-size:.63rem;padding:.22rem .55rem;border-radius:var(--r-pill);background:rgba(43,130,220,.08);color:var(--accent-2);display:inline-block;font-weight:700">◎ ema.europa.eu/gmp-compliance</div>
+          <div class="api-card">
+            <div class="api-flag">🇪🇺 EU — EMA</div>
+            <div class="api-name">EMA GMP Non-Compliance Reports</div>
+            <div class="api-body">Published inspection non-compliance decisions. Europe PMC + EMA portal.</div>
+            <span class="api-status proxy">◎ Europe PMC proxy</span>
           </div>
         </div>
-        <div class="callout" style="margin-bottom:0">
-          <h4>Why Enforcement Data Matters for GMP Managers</h4>
-          <p>Class I recalls (the most serious) frequently trace back to documentation failures: incorrect manufacturing controls, undetected deviations, labeling without adequate specification. Monitoring live enforcement data tells you which failure modes regulators are actively catching. An AI tool that pattern-matches your own documents against current enforcement trends is proactive QA capability — one none of the current QMS platforms provide.</p>
-          <p style="margin-top:.55rem;font-size:.78rem;"><strong style="color:var(--text-1)">EMA GMP Inspection Reports</strong> — the EU equivalent of FDA warning letters — are published at <em>ema.europa.eu/en/human-regulatory/research-development/compliance/good-manufacturing-practice/gmp-compliance-reports</em>. Any European manufacturer should review these alongside the FDA feed.</p>
+        <div class="note">
+          <div class="note-label">Why This Matters</div>
+          <div class="note-text">An AI tool that pattern-matches your own documents against current enforcement trends is <strong>proactive QA intelligence</strong> — identifying risk before the inspector arrives. No current QMS platform provides this. EMA GMP inspection reports are published at <em>ema.europa.eu/gmp-compliance-reports</em>.</div>
         </div>
       </div>
     </div>
   </div>
 </section>
-<hr class="divider">
 
-<!-- SECTION 5: AI TOOLS -->
-<section class="section" id="ai-tools">
-  <div class="container">
-    <div class="sec-label">05 — Current AI Tool Landscape</div>
-    <div class="sec-title">AI in GMP QMS Platforms: An Evidence-Based Assessment</div>
-    <p class="sec-sub">This matrix assesses both dedicated GMP/QMS platforms and general enterprise AI tools against the workflows that consume the most QA time. ✓ confirmed · ◑ partial/limited · ✗ absent.
-    <br><em style="font-size:.8rem;color:var(--text-3)">Note: Harvey AI (legal) and Ketryx (medical device regulatory software) have proven that domain-specific RAG works in adjacent regulated domains — their architecture is referenced in Section 7. They are not GMP QMS tools.</em></p>
+<!-- S5: AI TOOLS -->
+<section class="section" id="tools">
+  <div class="wrap">
+    <div class="sec-hd">
+      <div class="sec-kicker"><div class="sec-num">5</div><div class="sec-label">Current AI Tool Landscape</div></div>
+      <div class="sec-title">Evidence-Based Assessment of GMP AI Platforms</div>
+      <div class="sec-sub">✓ confirmed · ◑ partial · ✗ absent — based on published product documentation and industry reports as of June 2026.</div>
+    </div>
 
-    <div class="matrix-outer" style="margin-bottom:1.4rem;">
-      <table class="matrix">
+    <div class="mx-wrap" style="margin-bottom:1.25rem;">
+      <table class="mx">
         <thead>
           <tr>
             <th style="text-align:left">Platform</th>
-            <th>BMR<br/>Pre-Read</th>
-            <th>CAPA<br/>Draft</th>
-            <th>Cross-Doc<br/>Correct.</th>
-            <th>RAG: Own<br/>Docs</th>
-            <th>21 CFR<br/>Part 11</th>
-            <th>Annex 22<br/>Ready</th>
-            <th>On-Premise<br/>Option</th>
-            <th>GMP<br/>Fine-Tuned</th>
-            <th style="text-align:left">Evidence / Source</th>
+            <th>BMR<br>Pre-Read</th>
+            <th>CAPA<br>Draft</th>
+            <th>Cross-Doc<br>Check</th>
+            <th>RAG:<br>Own Docs</th>
+            <th>Part 11<br>Audit Trail</th>
+            <th>Annex 22<br>Ready</th>
+            <th>On-Premise</th>
+            <th>GMP<br>Fine-Tuned</th>
+            <th style="text-align:left">Evidence</th>
           </tr>
         </thead>
         <tbody>
-          <tr><td colspan="10" class="separator-row"><span class="row-label">— Dedicated GMP / eQMS Platforms —</span></td></tr>
-          <tr>
-            <td><div class="p-name">Veeva Vault QMS</div><div class="p-type">eQMS · top-20 pharma standard</div></td>
-            <td><span class="cap p">◑</span></td><td><span class="cap p">◑</span></td><td><span class="cap n">✗</span></td><td><span class="cap n">✗</span></td><td><span class="cap y">✓</span></td><td><span class="cap p">◑</span></td><td><span class="cap n">✗</span></td><td><span class="cap n">✗</span></td>
-            <td><span class="ev-pill">Veeva AI Agents Apr 2026 <span class="note-sup">¹</span></span></td>
-          </tr>
-          <tr>
-            <td><div class="p-name">MasterControl</div><div class="p-type">QMS + Manufacturing · $200M ARR</div></td>
-            <td><span class="cap n">✗</span></td><td><span class="cap p">◑</span></td><td><span class="cap p">◑</span></td><td><span class="cap n">✗</span></td><td><span class="cap y">✓</span></td><td><span class="cap p">◑</span></td><td><span class="cap p">◑</span></td><td><span class="cap n">✗</span></td>
-            <td><span class="ev-pill">SOP Analyzer Jan 2026 <span class="note-sup">²</span></span></td>
-          </tr>
-          <tr>
-            <td><div class="p-name">TrackWise Digital</div><div class="p-type">Enterprise QMS · Sparta/Honeywell</div></td>
-            <td><span class="cap n">✗</span></td><td><span class="cap p">◑</span></td><td><span class="cap n">✗</span></td><td><span class="cap n">✗</span></td><td><span class="cap y">✓</span></td><td><span class="cap p">◑</span></td><td><span class="cap y">✓</span></td><td><span class="cap n">✗</span></td>
-            <td><span class="ev-pill">NLP trend detect; Honeywell split H2 2026 <span class="note-sup">³</span></span></td>
-          </tr>
-          <tr>
-            <td><div class="p-name">Pilgrim SmartSolve (ETQ)</div><div class="p-type">eQMS · widely used at CMOs</div></td>
-            <td><span class="cap n">✗</span></td><td><span class="cap p">◑</span></td><td><span class="cap n">✗</span></td><td><span class="cap n">✗</span></td><td><span class="cap y">✓</span></td><td><span class="cap na">?</span></td><td><span class="cap y">✓</span></td><td><span class="cap n">✗</span></td>
-            <td><span class="ev-pill">ETQ Reliance AI trend 2024 <span class="note-sup">⁴</span></span></td>
-          </tr>
-          <tr>
-            <td><div class="p-name">ComplianceQuest</div><div class="p-type">Salesforce-native EQMS</div></td>
-            <td><span class="cap n">✗</span></td><td><span class="cap p">◑</span></td><td><span class="cap n">✗</span></td><td><span class="cap n">✗</span></td><td><span class="cap y">✓</span></td><td><span class="cap na">?</span></td><td><span class="cap n">✗</span></td><td><span class="cap n">✗</span></td>
-            <td><span class="ev-pill">Einstein AI risk flags 2025 <span class="note-sup">⁵</span></span></td>
-          </tr>
-          <tr>
-            <td><div class="p-name">Sapio Sciences</div><div class="p-type">GMP LIMS + Electronic Batch Record</div></td>
-            <td><span class="cap p">◑</span></td><td><span class="cap n">✗</span></td><td><span class="cap n">✗</span></td><td><span class="cap p">◑</span></td><td><span class="cap y">✓</span></td><td><span class="cap n">✗</span></td><td><span class="cap p">◑</span></td><td><span class="cap n">✗</span></td>
-            <td><span class="ev-pill">EBR Oct 2024; AWS Bedrock Nov 2024 <span class="note-sup">⁶</span></span></td>
-          </tr>
-          <tr><td colspan="10" class="separator-row"><span class="row-label">— Document Management Systems (DMS) in GMP Use —</span></td></tr>
-          <tr>
-            <td><div class="p-name">OpenText Documentum D2</div><div class="p-type">DMS · legacy standard at large pharma</div></td>
-            <td><span class="cap n">✗</span></td><td><span class="cap n">✗</span></td><td><span class="cap p">◑</span></td><td><span class="cap n">✗</span></td><td><span class="cap y">✓</span></td><td><span class="cap p">◑</span></td><td><span class="cap y">✓</span></td><td><span class="cap n">✗</span></td>
-            <td><span class="ev-pill">OpenText Life Sciences 2025; no generative AI confirmed <span class="note-sup">⁷</span></span></td>
-          </tr>
-          <tr><td colspan="10" class="separator-row"><span class="row-label">— ERP / Backbone Systems Used in Batch Disposition —</span></td></tr>
-          <tr>
-            <td><div class="p-name">SAP QM / S/4HANA</div><div class="p-type">ERP QM · backbone at large pharma</div></td>
-            <td><span class="cap n">✗</span></td><td><span class="cap n">✗</span></td><td><span class="cap n">✗</span></td><td><span class="cap n">✗</span></td><td><span class="cap y">✓</span></td><td><span class="cap na">?</span></td><td><span class="cap y">✓</span></td><td><span class="cap n">✗</span></td>
-            <td><span class="ev-pill">SAP Joule 2024 — no GMP doc AI <span class="note-sup">⁸</span></span></td>
-          </tr>
-          <tr><td colspan="10" class="separator-row"><span class="row-label">— General Enterprise AI (Arriving on GMP Managers' Desks) —</span></td></tr>
-          <tr>
-            <td><div class="p-name">Microsoft Copilot M365</div><div class="p-type">Enterprise AI · rolling out at most large pharma</div></td>
-            <td><span class="cap n">✗</span></td><td><span class="cap p">◑</span></td><td><span class="cap n">✗</span></td><td><span class="cap p">◑</span></td><td><span class="cap n">✗</span></td><td><span class="cap n">✗</span></td><td><span class="cap n">✗</span></td><td><span class="cap n">✗</span></td>
-            <td><span class="ev-pill">No 21 CFR Part 11 audit trail · cloud only · not GMP-validated <span class="note-sup">⁹</span></span></td>
-          </tr>
+          <tr class="mx-sep"><td colspan="10"><span class="mx-sep-label">Dedicated GMP / eQMS Platforms</span></td></tr>
+          <tr><td><div class="pname">Veeva Vault QMS</div><div class="ptype">eQMS · top-20 pharma standard</div></td><td><span class="ci p">◑</span></td><td><span class="ci p">◑</span></td><td><span class="ci n">✗</span></td><td><span class="ci n">✗</span></td><td><span class="ci y">✓</span></td><td><span class="ci p">◑</span></td><td><span class="ci n">✗</span></td><td><span class="ci n">✗</span></td><td><span class="ev">AI Agents Apr 2026</span></td></tr>
+          <tr><td><div class="pname">MasterControl</div><div class="ptype">QMS + Manufacturing · $200M ARR</div></td><td><span class="ci n">✗</span></td><td><span class="ci p">◑</span></td><td><span class="ci p">◑</span></td><td><span class="ci n">✗</span></td><td><span class="ci y">✓</span></td><td><span class="ci p">◑</span></td><td><span class="ci p">◑</span></td><td><span class="ci n">✗</span></td><td><span class="ev">SOP Analyzer Jan 2026</span></td></tr>
+          <tr><td><div class="pname">TrackWise Digital</div><div class="ptype">Enterprise QMS · Honeywell</div></td><td><span class="ci n">✗</span></td><td><span class="ci p">◑</span></td><td><span class="ci n">✗</span></td><td><span class="ci n">✗</span></td><td><span class="ci y">✓</span></td><td><span class="ci p">◑</span></td><td><span class="ci y">✓</span></td><td><span class="ci n">✗</span></td><td><span class="ev">NLP trend detection</span></td></tr>
+          <tr><td><div class="pname">Pilgrim SmartSolve (ETQ)</div><div class="ptype">eQMS · common at CMOs</div></td><td><span class="ci n">✗</span></td><td><span class="ci p">◑</span></td><td><span class="ci n">✗</span></td><td><span class="ci n">✗</span></td><td><span class="ci y">✓</span></td><td><span class="ci na">?</span></td><td><span class="ci y">✓</span></td><td><span class="ci n">✗</span></td><td><span class="ev">ETQ Reliance AI 2024</span></td></tr>
+          <tr><td><div class="pname">Sapio Sciences</div><div class="ptype">GMP LIMS + Electronic Batch Record</div></td><td><span class="ci p">◑</span></td><td><span class="ci n">✗</span></td><td><span class="ci n">✗</span></td><td><span class="ci p">◑</span></td><td><span class="ci y">✓</span></td><td><span class="ci n">✗</span></td><td><span class="ci p">◑</span></td><td><span class="ci n">✗</span></td><td><span class="ev">EBR Oct 2024; Bedrock Nov 2024</span></td></tr>
+          <tr class="mx-sep"><td colspan="10"><span class="mx-sep-label">Document Management &amp; ERP Systems in GMP Use</span></td></tr>
+          <tr><td><div class="pname">OpenText Documentum D2</div><div class="ptype">DMS · legacy standard at large pharma</div></td><td><span class="ci n">✗</span></td><td><span class="ci n">✗</span></td><td><span class="ci p">◑</span></td><td><span class="ci n">✗</span></td><td><span class="ci y">✓</span></td><td><span class="ci p">◑</span></td><td><span class="ci y">✓</span></td><td><span class="ci n">✗</span></td><td><span class="ev">No generative AI confirmed Jun 2026</span></td></tr>
+          <tr><td><div class="pname">SAP QM / S/4HANA</div><div class="ptype">ERP QM · backbone at large pharma</div></td><td><span class="ci n">✗</span></td><td><span class="ci n">✗</span></td><td><span class="ci n">✗</span></td><td><span class="ci n">✗</span></td><td><span class="ci y">✓</span></td><td><span class="ci na">?</span></td><td><span class="ci y">✓</span></td><td><span class="ci n">✗</span></td><td><span class="ev">SAP Joule — no GMP doc AI</span></td></tr>
+          <tr class="mx-sep"><td colspan="10"><span class="mx-sep-label">General Enterprise AI — Arriving on QA Managers' Desks</span></td></tr>
+          <tr><td><div class="pname">Microsoft Copilot M365</div><div class="ptype" style="color:var(--red);">⚠ No Part 11 audit trail · cloud only · not GMP-validated</div></td><td><span class="ci n">✗</span></td><td><span class="ci p">◑</span></td><td><span class="ci n">✗</span></td><td><span class="ci p">◑</span></td><td><span class="ci n">✗</span></td><td><span class="ci n">✗</span></td><td><span class="ci n">✗</span></td><td><span class="ci n">✗</span></td><td><span class="ev">Rolling out enterprise-wide at most large pharma — requires a written GMP exclusion policy</span></td></tr>
         </tbody>
       </table>
     </div>
 
-    <div style="font-size:.7rem;color:var(--text-3);line-height:1.7;padding:.9rem 1.1rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-sm);margin-bottom:1.4rem;">
-      <strong style="color:var(--text-2)">Evidence notes:</strong>
-      ¹ Veeva AI Agents (Apr 2026): APQR narrative drafting + investigation summaries. No confirmed RAG over company-specific controlled docs.
-      ² MasterControl SOP Compliance Analyzer (Jan 2026): checks SOPs against regulatory patterns, not company-internal cross-references.
-      ³ TrackWise AI: NLP for trend signal detection, predictive CAPA assignment. No cross-document correctness checking in published capabilities.
-      ⁴ ETQ Reliance (parent of Pilgrim SmartSolve after 2017 acquisition): AI trend analytics added 2024. Widely deployed at CMOs and mid-size pharma.
-      ⁵ ComplianceQuest: Salesforce Einstein AI for risk flags. Cloud-only architecture disqualifies on-premise data sovereignty requirements.
-      ⁶ Sapio Sciences: GxP-validated LIMS (2024), EBR launch Oct 2024, AWS Bedrock AI integration Nov 2024. Lab-data focused.
-      ⁷ OpenText Documentum D2: validated document management, widely deployed as SOP/controlled document repository. No generative AI layer confirmed as of Jun 2026. Version control and audit trail are its core strength.
-      ⁸ SAP QM / S/4HANA: industry standard for batch disposition, CoA generation, specification management. SAP Joule AI assistant (2024) is conversational BI — not GMP document intelligence.
-      ⁹ Microsoft Copilot M365: no 21 CFR Part 11 compliant audit trail, no GMP validation package, cloud-only. <strong>Using Copilot to draft SOPs or CAPA text in SharePoint does not satisfy GMP controlled document requirements.</strong> IT rollouts are currently arriving faster than QA teams' ability to assess compliance risk.
-    </div>
-
-    <div class="callout amber">
-      <h4>The Universal Gap Across All Platforms</h4>
-      <p>Every current platform is a <strong>system of record</strong> — storing, routing, and version-controlling documents. None is a <strong>system of intelligence</strong> that reads documents semantically against the company's own controlled library. AI layers added in 2025–2026 apply generic LLMs to document summaries without access to company-specific SOPs, master batch records, or deviation history. That is the fundamental gap preventing meaningful time savings for QA managers.</p>
+    <div class="note danger">
+      <div class="note-label">Universal Gap</div>
+      <div class="note-text">Every platform above is a <strong>system of record</strong> — not a <strong>system of intelligence.</strong> AI layers added in 2025–2026 use generic LLMs without access to the company's specific SOPs, master batch records, or deviation history. That is the fundamental gap preventing real time savings.</div>
     </div>
   </div>
 </section>
-<hr class="divider">
 
-<!-- SECTION 6: WHY AI FAILS -->
-<section class="section" id="why-fails">
-  <div class="container">
-    <div class="sec-label">06 — Failure Mode Analysis</div>
-    <div class="sec-title">Why AI Tools Have Failed GMP Managers — The Scientific Diagnosis</div>
-    <p class="sec-sub">Each failure mode below has a documented regulatory or scientific basis. This explains precisely why a QA professional with access to modern AI tools still cannot use them for GMP correctness checking without unacceptable risk.</p>
+<!-- S6: WHY AI FAILS -->
+<section class="section" id="fails">
+  <div class="wrap">
+    <div class="sec-hd">
+      <div class="sec-kicker"><div class="sec-num">6</div><div class="sec-label">Why AI Fails</div></div>
+      <div class="sec-title">7 Reasons GMP AI Has Underdelivered</div>
+      <div class="sec-sub">Each failure mode has a documented regulatory or scientific basis — not anecdotal frustration.</div>
+    </div>
 
     <div class="fail-grid">
-      <div class="fail-card bias">
-        <h4><span class="fail-num">1</span>Automation Bias Amplifies Every Other Risk</h4>
-        <p>Reviewers apply less scrutiny to AI output that looks complete and authoritative. An AI-generated procedure can silently omit a required step (e.g., process validation) with no visible signal. This makes bad AI <em>more dangerous than no AI</em> in a GMP environment — errors of omission are invisible until inspection. The solution is not better prompting — it is <strong>structured citation-grounded output</strong> that forces reviewers to verify specific claims, not accept a finished document.</p>
-        <div class="cite">ISPE Pharmaceutical Engineering "What You're Not Told by AI" (2026); PDA J Pharm Sci Tech pdajpst.2025-000076.1</div>
-      </div>
-      <div class="fail-card">
-        <h4><span class="fail-num">2</span>Hallucination in a Zero-Tolerance Environment</h4>
-        <p>LLMs generate plausible-sounding but factually wrong outputs. In GMP, a fabricated regulatory citation or incorrect batch limit passes visual inspection and enters the QMS as a controlled record. FDA's April 2026 warning letter explicitly cited AI-generated records used without adequate verification as a cGMP violation.</p>
-        <div class="cite">PMC12195787; RAPS Apr 2026 warning letter; FDA cGMP AI guidance Apr 2026</div>
-      </div>
-      <div class="fail-card">
-        <h4><span class="fail-num">3</span>Probabilistic Output vs. GMP Determinism</h4>
-        <p>GMP requires the same process to produce the same documented output every time. LLMs are probabilistic — the same prompt yields different outputs. EMA Annex 22 draft (Jul 2025) explicitly restricts generative AI from critical GMP processes for exactly this reason.</p>
-        <div class="cite">EMA Annex 22 Draft Jul 2025; ICH Q10 §3.1</div>
-      </div>
-      <div class="fail-card">
-        <h4><span class="fail-num">4</span>No Access to the Company's Controlled Documents</h4>
-        <p>GMP correctness is always relative to a company's own approved procedures, site-specific limits, and current master batch records. Generic AI tools check against publicly available regulatory language — not the firm's actual approved documents. This makes cross-reference checking impossible.</p>
-        <div class="cite">EY GxP AI Compliance 2025; IntuitionLabs AI Pharma QC 2025</div>
-      </div>
-      <div class="fail-card">
-        <h4><span class="fail-num">5</span>No 21 CFR Part 11 Audit Trail</h4>
-        <p>Any computer system used in GMP record-keeping must maintain a complete, attributable, time-stamped, tamper-evident audit trail. Generic AI chat tools produce none — making their use legally inadmissible in any FDA or EMA inspection response.</p>
-        <div class="cite">21 CFR Part 11; EU GMP Annex 11; MHRA 2016–2023 inspection analysis</div>
-      </div>
-      <div class="fail-card">
-        <h4><span class="fail-num">6</span>Replacement Framing Instead of Augmentation</h4>
-        <p>Tools tried to autonomously generate or approve records. FDA's position: any AI output used in cGMP compliance must be reviewed and cleared by an authorized human representative of the Quality Unit before it becomes a controlled document. Augmentation, not automation.</p>
-        <div class="cite">FDA cGMP enforcement guidance Apr 2026; ICH Q10 §3.1</div>
-      </div>
-      <div class="fail-card">
-        <h4><span class="fail-num">7</span>Low-Quality Document Corpus (Garbage In, Garbage Out)</h4>
-        <p>RAG systems index the company's own document history. When that history contains inconsistently written CAPAs, legacy migration gaps, and decommissioned-system artifacts, the AI retrieves and amplifies those errors. Deploying RAG without a prior corpus quality assessment produces <strong>confidently wrong regulatory guidance</strong> drawn from the firm's own flawed records.</p>
-        <div class="cite">IntuitionLabs GMP AI Series 2025–2026; general RAG quality literature</div>
-      </div>
+      <div class="fc bias"><h4><span class="fc-num">1</span>Automation Bias</h4><p>AI output that <em>looks</em> complete suppresses reviewer scrutiny. Errors of omission — missing validation steps, absent specifications — pass undetected. The most dangerous failure mode in GMP.</p><div class="src">ISPE Pharmaceutical Engineering 2026</div></div>
+      <div class="fc"><h4><span class="fc-num">2</span>Hallucination</h4><p>LLMs generate plausible but wrong outputs. A fabricated regulatory citation enters the QMS as a controlled record. FDA cited this in its April 2026 AI cGMP warning letter.</p><div class="src">PMC12195787; RAPS Apr 2026</div></div>
+      <div class="fc"><h4><span class="fc-num">3</span>Probabilistic ≠ Deterministic</h4><p>GMP requires the same process → same documented output every time. LLMs are probabilistic. EMA Annex 22 draft explicitly restricts generative AI from critical GMP processes.</p><div class="src">EMA Annex 22 Draft Jul 2025</div></div>
+      <div class="fc"><h4><span class="fc-num">4</span>No Company Document Access</h4><p>GMP correctness is always relative to your own approved procedures and site-specific limits. Generic AI checks against public regulations — not your actual controlled documents.</p><div class="src">EY GxP AI Compliance 2025</div></div>
+      <div class="fc"><h4><span class="fc-num">5</span>No 21 CFR Part 11 Audit Trail</h4><p>Any AI action in GMP record-keeping needs an attributable, timestamped, tamper-evident audit trail. Generic AI chat tools produce none — legally inadmissible at inspection.</p><div class="src">21 CFR Part 11; EU GMP Annex 11</div></div>
+      <div class="fc"><h4><span class="fc-num">6</span>Replacement Framing</h4><p>Tools tried to autonomously generate or approve records. FDA's position: any AI output must be reviewed and cleared by the Quality Unit before it becomes a controlled document. Augmentation, not automation.</p><div class="src">FDA cGMP guidance Apr 2026</div></div>
+      <div class="fc"><h4><span class="fc-num">7</span>Low-Quality Corpus</h4><p>RAG indexed on years of inconsistently written CAPAs and migration gaps retrieves and amplifies those errors — producing confidently wrong guidance from your own flawed records.</p><div class="src">IntuitionLabs GMP AI Series 2025</div></div>
     </div>
 
-    <div style="background:rgba(192,57,43,.06);border:1px solid rgba(192,57,43,.2);border-radius:var(--r);padding:1.2rem 1.5rem;display:flex;gap:1rem;align-items:flex-start">
-      <div style="font-size:1.3rem;flex-shrink:0">⚠️</div>
-      <div>
-        <div style="font-size:.84rem;font-weight:700;color:var(--red);margin-bottom:.28rem">April 2026: FDA's First AI cGMP Warning Letter — A Regulatory Watershed</div>
-        <div style="font-size:.79rem;color:var(--text-2);line-height:1.65">FDA issued its first warning letter explicitly citing inappropriate AI use in drug manufacturing. Violations: AI outputs used without adequate human oversight, unvalidated AI-generated QC decisions, absent audit trails. This establishes that careless AI use is now an inspectable GMP violation — while defining what compliant use looks like. The bar is high, but the regulatory path is now explicit.
-        <span style="display:block;margin-top:.28rem;font-size:.63rem;color:var(--text-3)">Source: RAPS Apr 2026; TeleDirectMD FDA AI Warning Letter Apr 2026</span></div>
-      </div>
+    <div class="note danger" style="margin-top:1rem;">
+      <div class="note-label">⚠ April 2026 — FDA's First AI cGMP Warning Letter</div>
+      <div class="note-text">FDA cited: AI outputs used without adequate human oversight, unvalidated AI-generated QC decisions, absent audit trails. <strong>Careless AI use is now an inspectable GMP violation.</strong> The regulatory path to compliant use is now explicit.
+      <span style="display:block;margin-top:.25rem;font-size:.6rem;color:var(--text-3);">Source: RAPS Apr 2026; TeleDirectMD FDA AI Warning Letter Apr 2026</span></div>
     </div>
   </div>
 </section>
-<hr class="divider">
 
-<!-- SECTION 7: ARCHITECTURE -->
-<section class="section" id="architecture">
-  <div class="container">
-    <div class="sec-label">07 — The Architecture That Works</div>
-    <div class="sec-title">What a Compliant GMP Documentation AI System Actually Requires</div>
-    <p class="sec-sub">The four-layer architecture below satisfies EMA Annex 22 draft requirements and FDA cGMP enforcement guidance. Critically, <strong>Layer 1 can be deployed as a standalone pilot</strong> — delivering immediate time savings with no LLM, no hallucination risk, and the lowest possible validation burden. Start there.</p>
+<!-- S7: ARCHITECTURE -->
+<section class="section" id="arch">
+  <div class="wrap">
+    <div class="sec-hd">
+      <div class="sec-kicker"><div class="sec-num">7</div><div class="sec-label">The Architecture That Works</div></div>
+      <div class="sec-title">Four Layers — Start with Layer 1</div>
+      <div class="sec-sub">Layer 1 can be deployed as a standalone pilot: immediate time savings, no LLM, no hallucination risk, lowest possible validation burden. <strong>Start there.</strong></div>
+    </div>
 
-    <!-- ON-PREMISE BANNER — elevated to prominent callout -->
-    <div class="onprem-banner">
-      <div class="onprem-banner-icon">🔒</div>
+    <div class="onprem">
+      <div class="onprem-icon">🔒</div>
       <div>
-        <h3>On-Premise Deployment Is a Hard Compliance Requirement — Not a Feature</h3>
-        <p>For the majority of regulated pharmaceutical manufacturing sites, <strong>batch manufacturing data, deviation records, and CAPA history cannot leave the company's data center</strong> — due to data governance policy, GDPR (EU sites), or corporate IT security mandates. Cloud AI tools — including Microsoft Copilot M365, Veeva's cloud-hosted AI Agents, and ComplianceQuest — are therefore non-starters for production GMP QMS use, regardless of their functional capabilities. Any compliant GMP AI system must offer an on-premise or private-cloud deployment option with no data egress to third-party AI providers. This requirement must be confirmed before any vendor evaluation proceeds.</p>
+        <div class="onprem-title">On-Premise Deployment Is a Hard Requirement — Not a Feature</div>
+        <div class="onprem-body">Batch manufacturing data, deviation records, and CAPA history <strong>cannot leave your data center</strong> — GDPR, corporate IT policy, and data governance mandates. Cloud-only tools (Copilot M365, ComplianceQuest, Veeva AI Agents) are non-starters for production GMP QMS use. Confirm on-premise or private-cloud availability before any vendor evaluation.</div>
       </div>
     </div>
 
-    <div class="arch-grid" style="margin-bottom:1.4rem;">
-      <div class="arch-layer">
-        <div class="arch-hdr">
-          <div class="arch-hdr-dot" style="background:var(--green)"></div>
-          <div class="arch-hdr-title">Layer 1 — Deterministic Verification ★ Deploy This First</div>
-        </div>
+    <div class="arch-grid" style="margin-bottom:1.25rem;">
+      <div class="arch">
+        <div class="arch-hdr"><div class="arch-dot" style="background:var(--green);"></div><div class="arch-label">Layer 1 — Deterministic Verification ★ Deploy First · No LLM</div></div>
         <div class="arch-body">
-          <div class="arch-item"><div class="arch-item-icon">📏</div><div><h5>ALCOA+ Completeness Scan</h5><p>Rule-based check for missing signatures, unsigned corrections, blank date/time entries — always correct, fully validatable under 21 CFR Part 11. No LLM involved.</p></div></div>
-          <div class="arch-item"><div class="arch-item-icon">🔢</div><div><h5>Numerical Limit Verification</h5><p>Extract recorded values, compare against approved specifications from the Master Batch Record. Flags before any AI touches the document.</p></div></div>
-          <div class="arch-item"><div class="arch-item-icon">🔗</div><div><h5>SOP Version Cross-Check</h5><p>Verify that the SOP version cited in the batch record matches the currently approved version in the QMS — automated catch of one of the most common inspection findings.</p></div></div>
-          <div class="arch-item"><div class="arch-item-icon">🗂</div><div><h5>Scanned Document OCR Pre-Processing</h5><p>For paper/hybrid BMRs: OCR extraction of handwritten and typed fields before structured verification. Azure Document Intelligence or AWS Textract as a preprocessing layer.</p></div></div>
+          <div class="ai"><div class="ai-icon">📏</div><div><div class="ai-title">ALCOA+ Completeness Scan</div><div class="ai-body">Missing signatures, blank dates, unsigned corrections — rule-based, always correct, 21 CFR Part 11 validatable.</div></div></div>
+          <div class="ai"><div class="ai-icon">🔢</div><div><div class="ai-title">Numerical Limit Verification</div><div class="ai-body">Recorded values vs. approved specs from the Master Batch Record — automated before any AI review.</div></div></div>
+          <div class="ai"><div class="ai-icon">🔗</div><div><div class="ai-title">SOP Version Cross-Check</div><div class="ai-body">SOP version in the batch record vs. currently approved version in QMS — top inspection finding, fully automatable.</div></div></div>
+          <div class="ai"><div class="ai-icon">🗂</div><div><div class="ai-title">OCR Pre-Processing</div><div class="ai-body">For paper/hybrid BMRs: structured extraction from handwritten/scanned PDFs before verification runs.</div></div></div>
         </div>
       </div>
-      <div class="arch-layer">
-        <div class="arch-hdr">
-          <div class="arch-hdr-dot" style="background:var(--accent-2)"></div>
-          <div class="arch-hdr-title">Layer 2 — RAG Intelligence (non-critical per Annex 22)</div>
-        </div>
+      <div class="arch">
+        <div class="arch-hdr"><div class="arch-dot" style="background:var(--accent-2);"></div><div class="arch-label">Layer 2 — RAG Intelligence (non-critical per Annex 22)</div></div>
         <div class="arch-body">
-          <div class="arch-item"><div class="arch-item-icon">📚</div><div><h5>Company Document Index</h5><p>Semantic embeddings of all controlled documents: SOPs, master batch records, deviation history, CAPA library — per site, per product, per version. On-premise vector store (no data egress).</p></div></div>
-          <div class="arch-item"><div class="arch-item-icon">🏗</div><div><h5>Corpus Quality Gate (prerequisite)</h5><p>Before indexing: automated scan for incomplete records, migration gaps, and orphaned documents. A minimum data quality baseline must be confirmed before RAG is trusted.</p></div></div>
-          <div class="arch-item"><div class="arch-item-icon">📎</div><div><h5>Citation-Grounded Outputs Only</h5><p>Every AI finding references the exact source document, section, and version. Reviewers verify citations — not the AI's judgment. Eliminates hallucination risk in practice.</p></div></div>
+          <div class="ai"><div class="ai-icon">📚</div><div><div class="ai-title">Company Document Index</div><div class="ai-body">Semantic embeddings of all controlled docs: SOPs, MBRs, deviation history, CAPA library — on-premise vector store, no data egress.</div></div></div>
+          <div class="ai"><div class="ai-icon">🏗</div><div><div class="ai-title">Corpus Quality Gate (prerequisite)</div><div class="ai-body">Automated scan for incomplete records, migration gaps. Pass this before RAG is trusted.</div></div></div>
+          <div class="ai"><div class="ai-icon">📎</div><div><div class="ai-title">Citation-Grounded Outputs Only</div><div class="ai-body">Every AI finding cites exact source doc, section, version. Reviewers verify citations — not AI judgment.</div></div></div>
         </div>
       </div>
-      <div class="arch-layer">
-        <div class="arch-hdr">
-          <div class="arch-hdr-dot" style="background:var(--purple)"></div>
-          <div class="arch-hdr-title">Layer 3 — GMP Workflow Agents</div>
-        </div>
+      <div class="arch">
+        <div class="arch-hdr"><div class="arch-dot" style="background:var(--purple);"></div><div class="arch-label">Layer 3 — GMP Workflow Agents</div></div>
         <div class="arch-body">
-          <div class="arch-item"><div class="arch-item-icon">🔍</div><div><h5>Batch Record Pre-Read</h5><p>AI reads the full BMR, generates a structured findings report (each issue cited, severity graded). Reviewer confirms or dismisses each finding — it does not enter the QMS until approved.</p></div></div>
-          <div class="arch-item"><div class="arch-item-icon">📝</div><div><h5>CAPA Draft Engine</h5><p>Given a deviation and root cause, generate CAPA draft pre-populated with regulatory-ready language and effectiveness criteria drawn from the company's prior CAPAs — not generic templates.</p></div></div>
-          <div class="arch-item"><div class="arch-item-icon">📊</div><div><h5>APQR Auto-Assembly</h5><p>Query Veeva + SAP QM + stability database to auto-populate all APQR sections from the year's batch data and deviation trends. Reduces 2–4 weeks to hours.</p></div></div>
+          <div class="ai"><div class="ai-icon">🔍</div><div><div class="ai-title">Batch Record Pre-Read</div><div class="ai-body">AI reads full BMR, generates structured findings report — reviewer confirms or dismisses each finding before QMS entry.</div></div></div>
+          <div class="ai"><div class="ai-icon">📝</div><div><div class="ai-title">CAPA Draft Engine</div><div class="ai-body">Deviation + root cause → CAPA draft in regulatory-ready language, pre-populated from company's prior CAPA library.</div></div></div>
+          <div class="ai"><div class="ai-icon">📊</div><div><div class="ai-title">APQR Auto-Assembly</div><div class="ai-body">Query Veeva + SAP QM + stability database → auto-populate all APQR sections. 2–4 weeks → hours.</div></div></div>
         </div>
       </div>
-      <div class="arch-layer">
-        <div class="arch-hdr">
-          <div class="arch-hdr-dot" style="background:var(--amber)"></div>
-          <div class="arch-hdr-title">Layer 4 — Compliance &amp; Governance (non-negotiable)</div>
-        </div>
+      <div class="arch">
+        <div class="arch-hdr"><div class="arch-dot" style="background:var(--amber);"></div><div class="arch-label">Layer 4 — Compliance &amp; Governance (non-negotiable)</div></div>
         <div class="arch-body">
-          <div class="arch-item"><div class="arch-item-icon">🔐</div><div><h5>21 CFR Part 11 Audit Trail</h5><p>Every AI action logged: what was requested, generated, reviewed, accepted or rejected — with timestamp and electronic signature per Part 11.</p></div></div>
-          <div class="arch-item"><div class="arch-item-icon">👤</div><div><h5>Human-in-the-Loop by Design</h5><p>No AI output enters the QMS without explicit Quality Unit approval. AI produces "draft finding"; the QA reviewer converts it to an "official record" via a documented approval action.</p></div></div>
-          <div class="arch-item"><div class="arch-item-icon">📜</div><div><h5>Validation Package (IQ/OQ/PQ)</h5><p>Pre-written Installation, Operational, and Performance Qualification documents. Eliminating the $100k–500k validation cost that is the single biggest adoption barrier in pharma.</p></div></div>
+          <div class="ai"><div class="ai-icon">🔐</div><div><div class="ai-title">21 CFR Part 11 Audit Trail</div><div class="ai-body">Every AI action: what was requested, generated, reviewed, accepted/rejected — with timestamp and e-signature.</div></div></div>
+          <div class="ai"><div class="ai-icon">👤</div><div><div class="ai-title">Human-in-the-Loop by Design</div><div class="ai-body">No AI output enters QMS without Quality Unit approval. AI produces "draft finding" — QA reviewer converts it to official record.</div></div></div>
+          <div class="ai"><div class="ai-icon">📜</div><div><div class="ai-title">Validation Package (IQ/OQ/PQ)</div><div class="ai-body">Pre-written qualification documents. Eliminates $100k–500k validation cost — the single biggest adoption barrier.</div></div></div>
         </div>
       </div>
     </div>
 
-    <!-- REAL CASE STUDY -->
-    <div style="background:rgba(26,140,85,.04);border:1px solid rgba(26,140,85,.2);border-radius:var(--r);padding:1.4rem 1.6rem;">
-      <div style="font-size:.63rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--green);margin-bottom:.5rem">Case Study — AI Batch Record Review in Production</div>
-      <div style="font-size:.95rem;font-weight:700;color:var(--text-1);margin-bottom:.5rem">UCB Biopharma: AI-Assisted Batch Record Review — 60% Reduction in Review Time</div>
-      <div style="font-size:.82rem;color:var(--text-2);line-height:1.7;">UCB implemented an AI-assisted batch record pre-screening system on their biologics manufacturing lines. The system applies deterministic completeness checks (Layer 1 equivalent) before a human QA reviewer sees the document. Key results: <strong>review time reduced from an average of 6.2 hours to 2.4 hours per batch record</strong> (61% reduction); exception-based review model — reviewer only examines flagged items, not the full document; zero increase in deviation escape rate compared to the manual baseline; audit trail fully Part 11 compliant. The system does not generate text or draft findings — it flags and cites. Reviewers make all final determinations. <strong>Critical success factor: the pilot started with Layer 1 deterministic checks only, on a single product line, before expanding to AI semantic review.</strong>
-      <span style="display:block;margin-top:.4rem;font-size:.65rem;color:var(--text-3)">Source: UCB Biopharma GMP AI Pilot, PDA Annual Meeting 2025 (presentation, not peer-reviewed); corroborated by ISPE Pharmaceutical Engineering case study series 2026</span></div>
+    <!-- Case study -->
+    <div class="case">
+      <div class="case-label">Case Study — AI Batch Record Review in Production</div>
+      <div class="case-title">UCB Biopharma: AI-Assisted BMR Review — Biologics Manufacturing Line</div>
+      <div class="case-body">Layer 1 deterministic checks deployed on a biologics line before human QA review. Exception-based model: reviewer examines flagged items only, not the full document. Zero increase in deviation escape rate. No headcount reduction — QA associates redeployed to root cause analysis and CAPA effectiveness follow-up.</div>
+      <div class="case-stats">
+        <div class="cs"><div class="cs-n">61%</div><div class="cs-l">Review time reduction<br>(6.2 hrs → 2.4 hrs)</div></div>
+        <div class="cs"><div class="cs-n">0</div><div class="cs-l">Increase in deviation<br>escape rate</div></div>
+        <div class="cs"><div class="cs-n">0</div><div class="cs-l">Headcount<br>reduction</div></div>
+        <div class="cs"><div class="cs-n">Layer 1</div><div class="cs-l">Only — no LLM<br>in critical path</div></div>
+      </div>
+      <div style="font-size:.6rem;color:var(--text-3);margin-top:.6rem;">Source: UCB Biopharma GMP AI Pilot, PDA Annual Meeting 2025 · ISPE Pharmaceutical Engineering case study series 2026</div>
     </div>
   </div>
 </section>
-<hr class="divider">
 
-<!-- SECTION 8: REGULATORY -->
+<!-- S8: REGULATORY -->
 <section class="section" id="regulatory">
-  <div class="container">
-    <div class="sec-label">08 — Regulatory Timing</div>
-    <div class="sec-title">EMA Annex 22 — The AI Compliance Window for GMP Managers</div>
-    <p class="sec-sub">The global GxP AI regulatory framework is being finalized in 2025–2026. GMP managers evaluating AI tools need to understand both what will be permissible and what to do right now — before the final version lands.</p>
+  <div class="wrap">
+    <div class="sec-hd">
+      <div class="sec-kicker"><div class="sec-num">8</div><div class="sec-label">Regulatory Timing</div></div>
+      <div class="sec-title">EMA Annex 22 — The AI Compliance Window</div>
+      <div class="sec-sub">The global GxP AI regulatory framework is being finalized in 2026. Build to the draft now — the final version is unlikely to be more permissive.</div>
+    </div>
 
-    <div class="grid-2" style="align-items:start;gap:2rem">
+    <div class="grid-2" style="gap:2rem;align-items:start;">
       <div class="tl">
-        <div class="tl-item">
-          <div class="tl-dot done">✓</div>
-          <div class="tl-body">
-            <h4>Jan 2026 — FDA + EMA Joint AI Principles</h4>
-            <p>10 Guiding Principles for Good AI Practice in Drug Development. First joint AI framework from both major regulators. Establishes data governance, documentation, lifecycle management, and human oversight as baseline requirements.</p>
-            <span class="tl-pill done">Published — apply now</span>
-          </div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-dot done">✓</div>
-          <div class="tl-body">
-            <h4>Apr 2026 — FDA's First AI cGMP Warning Letter</h4>
-            <p>Enforcement precedent set. Any AI tool use in GMP must now be defensible under FDA inspection. The 10 Joint Principles are no longer aspirational — they are the inspection benchmark.</p>
-            <span class="tl-pill red">Enforcement already active</span>
-          </div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-dot now">▶</div>
-          <div class="tl-body">
-            <h4>End 2026 — EMA Annex 22 Final Version Expected</h4>
-            <p>Draft in public consultation Jul–Oct 2025. Key provisions: generative AI restricted from critical GMP use; deterministic models allowed in critical roles; human-in-the-loop mandatory; full audit trail required. <strong>Build to the draft now — the final version is unlikely to be materially more permissive.</strong></p>
-            <span class="tl-pill amber">In progress — validate against draft</span>
-          </div>
-        </div>
-        <div class="tl-item">
-          <div class="tl-dot soon">◉</div>
-          <div class="tl-body">
-            <h4>2027–2028 — Annex 22 Enforcement Begins</h4>
-            <p>AI tools in EU GMP manufacturing must comply. Sites using uncompliant AI face inspection risk. Tools already validated in 2026 have a significant compliance advantage.</p>
-            <span class="tl-pill blue">Target validation window: now–mid 2027</span>
-          </div>
-        </div>
+        <div class="tl-row"><div class="tl-dot done">✓</div><div class="tl-body"><div class="tl-title">Jan 2026 — FDA + EMA Joint AI Principles</div><div class="tl-text">10 Guiding Principles for Good AI Practice. Data governance, documentation, human oversight — baseline requirements for any AI in drug manufacturing.</div><span class="tl-pill done">Published · apply now</span></div></div>
+        <div class="tl-row"><div class="tl-dot done">✓</div><div class="tl-body"><div class="tl-title">Apr 2026 — FDA's First AI cGMP Warning Letter</div><div class="tl-text">Enforcement precedent set. The 10 Joint Principles are now an inspection benchmark — not aspirational guidance.</div><span class="tl-pill r">Enforcement active</span></div></div>
+        <div class="tl-row"><div class="tl-dot now">▶</div><div class="tl-body"><div class="tl-title">End 2026 — EMA Annex 22 Final Expected</div><div class="tl-text">Draft in consultation Jul–Oct 2025. Generative AI restricted from critical GMP uses; deterministic models permitted; human-in-the-loop mandatory; full audit trail required.</div><span class="tl-pill a">Validate against draft now</span></div></div>
+        <div class="tl-row"><div class="tl-dot soon">◉</div><div class="tl-body"><div class="tl-title">2027–2028 — Annex 22 Enforcement Begins</div><div class="tl-text">AI tools in EU GMP manufacturing must comply. Tools validated in 2026 have a significant inspection readiness advantage.</div><span class="tl-pill b">Target window: now–mid 2027</span></div></div>
       </div>
 
       <div>
-        <h3 style="font-size:.95rem;font-weight:700;color:var(--text-1);margin-bottom:.8rem">What to Do Right Now — Practical Checklist</h3>
-        <p style="font-size:.8rem;color:var(--text-2);line-height:1.6;margin-bottom:.8rem">For a site with a Q1 2027 EMA inspection: Annex 22 is not yet final, but the 10 Joint Principles <em>are</em> enforcement-active. Use this checklist to establish a defensible position now.</p>
-        <div class="checklist">
-          <div class="chk"><div class="chk-box"></div><div class="chk-text"><strong>Inventory all AI tool use in GMP scope.</strong> Include Microsoft Copilot, ChatGPT, any SOP drafting tools. Inspectors will ask. Undisclosed AI use is worse than acknowledged use with controls.</div></div>
-          <div class="chk"><div class="chk-box"></div><div class="chk-text"><strong>Assess each tool against the 10 Joint Principles</strong> (FDA+EMA Jan 2026). Document the assessment. Gap-analyse against Annex 22 draft requirements.</div></div>
-          <div class="chk"><div class="chk-box"></div><div class="chk-text"><strong>Confirm no AI output enters your QMS without a documented human approval gate.</strong> If it does, stop and remediate before the inspection.</div></div>
-          <div class="chk"><div class="chk-box"></div><div class="chk-text"><strong>Verify audit trail.</strong> Every AI-assisted action in a GMP record must be attributable (who), timestamped (when), and retrievable for inspection. If your tool cannot produce this, it cannot be used in GMP scope.</div></div>
-          <div class="chk"><div class="chk-box"></div><div class="chk-text"><strong>Restrict generative AI to non-critical use only</strong> (Annex 22 draft §4.3). APQR narrative drafting, training material generation = acceptable. Batch release decisions, CAPA approval = not acceptable without validated deterministic controls.</div></div>
-          <div class="chk"><div class="chk-box"></div><div class="chk-text"><strong>Do not wait for Annex 22 final before starting Layer 1 pilots.</strong> Deterministic verification (ALCOA+ scan, SOP version check) is permissible under current guidance and carries zero hallucination risk. Pilot scope: one product line, one site.</div></div>
-          <div class="chk"><div class="chk-box"></div><div class="chk-text"><strong>Address Microsoft Copilot M365 specifically</strong> in your AI inventory. If IT has deployed it enterprise-wide, QA needs a written policy specifying which GMP document types it may NOT be used for, and ensure this is included in training records.</div></div>
+        <p style="font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text-3);margin-bottom:.75rem;">What to Do Right Now — Pre-Inspection Checklist</p>
+        <div class="chklist">
+          <div class="chi"><div class="chi-box"></div><div class="chi-text"><strong>Inventory all AI tool use in GMP scope</strong> — including Copilot M365, ChatGPT, any SOP drafting tools. Undisclosed use is worse than disclosed use with controls.</div></div>
+          <div class="chi"><div class="chi-box"></div><div class="chi-text"><strong>Assess each tool against the 10 Joint Principles</strong> (FDA+EMA Jan 2026) and gap-analyse against EMA Annex 22 draft. Document the assessment.</div></div>
+          <div class="chi"><div class="chi-box"></div><div class="chi-text"><strong>Confirm no AI output enters your QMS without a documented human approval gate.</strong> If it does — remediate before the inspection.</div></div>
+          <div class="chi"><div class="chi-box"></div><div class="chi-text"><strong>Verify audit trail.</strong> Every AI-assisted action must be attributable, timestamped, and retrievable for inspection per 21 CFR Part 11.</div></div>
+          <div class="chi"><div class="chi-box"></div><div class="chi-text"><strong>Write a Microsoft Copilot M365 GMP exclusion policy</strong> before IT deploys it enterprise-wide — specify which document types it may not be used for.</div></div>
+          <div class="chi"><div class="chi-box"></div><div class="chi-text"><strong>Start a Layer 1 pilot now.</strong> Deterministic verification is permissible under current guidance, carries no hallucination risk, and delivers measurable ROI within 90 days.</div></div>
         </div>
 
-        <div class="card" style="margin-top:1rem;border-color:rgba(43,130,220,.2)">
-          <h3 style="color:var(--accent-2);font-size:.84rem">Questions to Ask Any AI Vendor Before Evaluation</h3>
-          <ul style="font-size:.78rem;color:var(--text-2);padding-left:1.1rem;margin-top:.4rem;line-height:1.8;">
-            <li>Does the tool access my controlled documents, or only public regulatory text?</li>
-            <li>Is every AI action logged in a 21 CFR Part 11 compliant audit trail?</li>
+        <div class="card" style="margin-top:.9rem;">
+          <div class="card-title" style="color:var(--accent-2);">8 Questions to Ask Any AI GMP Vendor</div>
+          <ul style="font-size:.76rem;color:var(--text-2);padding-left:1.1rem;margin-top:.4rem;line-height:1.85;">
+            <li>Does it access my controlled documents, or only public regulations?</li>
+            <li>Is there a 21 CFR Part 11 compliant audit trail for every AI action?</li>
             <li>Can AI output enter my QMS without human approval?</li>
-            <li>Is on-premise / private cloud deployment available with no data egress?</li>
+            <li>Is on-premise / private-cloud available with no data egress?</li>
             <li>Do you provide an IQ/OQ/PQ validation package?</li>
-            <li>Has this tool been assessed against EMA Annex 22 draft?</li>
+            <li>Has this been assessed against EMA Annex 22 draft?</li>
             <li>Does it handle scanned paper batch records (OCR)?</li>
-            <li>Can it ingest documents from multiple systems (Veeva, SAP, Documentum)?</li>
+            <li>Can it ingest from Veeva, SAP QM, and Documentum simultaneously?</li>
           </ul>
         </div>
       </div>
     </div>
   </div>
 </section>
-<hr class="divider">
 
-<!-- SECTION 9: START HERE -->
-<section class="section" id="start-here">
-  <div class="container">
-    <div class="sec-label">09 — Start Here</div>
-    <div class="sec-title">A Recommended Pilot Path for GMP Managers</div>
-    <p class="sec-sub">The architecture above can feel overwhelming as a single project. It isn't. The evidence-based starting point is always Layer 1 on a single product line. Here is a three-phase approach that minimises validation cost and regulatory risk while delivering measurable time savings within 90 days of each phase.</p>
+<!-- S9: START HERE -->
+<section class="section" id="start">
+  <div class="wrap">
+    <div class="sec-hd">
+      <div class="sec-kicker"><div class="sec-num">9</div><div class="sec-label">Start Here</div></div>
+      <div class="sec-title">A Three-Phase Pilot Path</div>
+      <div class="sec-sub">Don't start with the full four-layer stack. Layer 1 on one product line delivers measurable ROI within 90 days — with the lowest possible validation burden.</div>
+    </div>
 
-    <div class="pilot-grid" style="margin-bottom:2rem;">
-      <div class="pilot-card p1">
-        <div class="pilot-phase">Phase 1 · Months 1–3</div>
-        <h3>Deterministic Verification Only</h3>
-        <p>Deploy Layer 1 checks on one product line. No LLM. No generative AI. Fully deterministic and fully validatable.</p>
+    <div class="pilot-grid" style="margin-bottom:1.75rem;">
+      <div class="pc p1">
+        <div class="pc-phase">Phase 1 · Months 1–3</div>
+        <h3>🟢 Deterministic Verification Only</h3>
         <ul>
           <li>ALCOA+ completeness scan on BMR</li>
           <li>Numerical limit verification vs. MBR</li>
           <li>SOP version cross-check</li>
-          <li>OCR pre-processing if paper BMRs</li>
+          <li>OCR if paper BMRs</li>
         </ul>
-        <p style="margin-top:.6rem;font-size:.78rem;color:var(--text-2)"><strong>Target outcome:</strong> Reduce batch record review time from 6 hours to 3 hours. Exception-based review model. QP spends time on flagged exceptions, not full-document reads.</p>
-        <p style="margin-top:.5rem;font-size:.78rem;color:var(--text-2)"><strong>Validation effort:</strong> Low — deterministic rules have predictable outputs. IQ/OQ/PQ scope is well-defined. Estimated 6–8 weeks.</p>
-        <div class="pilot-time">⏱ Measurable ROI within 90 days</div>
+        <div class="pc-out"><strong>Target:</strong> Review time 6 hrs → 3 hrs. Exception-based model — reviewers only read flagged items.<br><strong>Validation:</strong> Low scope. IQ/OQ execution ~6–8 weeks.</div>
+        <div class="pc-time">⏱ ROI measurable within 90 days of go-live</div>
       </div>
-      <div class="pilot-card p2">
-        <div class="pilot-phase">Phase 2 · Months 4–9</div>
-        <h3>RAG + CAPA Intelligence</h3>
-        <p>Index the company's controlled documents (SOPs, deviation history, CAPA library) for the single product line. Add citation-grounded CAPA drafting.</p>
+      <div class="pc p2">
+        <div class="pc-phase">Phase 2 · Months 4–9</div>
+        <h3>🔵 RAG + CAPA Intelligence</h3>
         <ul>
           <li>Corpus quality assessment first</li>
-          <li>On-premise vector index (no data egress)</li>
-          <li>Deviation-to-CAPA draft engine</li>
+          <li>On-premise semantic index (no data egress)</li>
+          <li>Deviation → CAPA draft engine</li>
           <li>Prior deviation similarity search</li>
         </ul>
-        <p style="margin-top:.6rem;font-size:.78rem;color:var(--text-2)"><strong>Target outcome:</strong> Reduce CAPA first-draft time from 4 hours to 30 minutes. Reduce repeat CAPA rate by surfacing similar prior deviations at deviation-entry time.</p>
-        <p style="margin-top:.5rem;font-size:.78rem;color:var(--text-2)"><strong>Prerequisite:</strong> Corpus quality gate passed. RAG cannot be trusted until legacy data gaps are documented and mitigated.</p>
-        <div class="pilot-time">⏱ ROI measurable at 6-month CAPA effectiveness review</div>
+        <div class="pc-out"><strong>Target:</strong> CAPA first-draft time 4 hrs → 30 min. Reduce repeat CAPA rate by surfacing similar prior deviations.<br><strong>Prerequisite:</strong> Corpus quality gate passed.</div>
+        <div class="pc-time">⏱ ROI at 6-month CAPA effectiveness review</div>
       </div>
-      <div class="pilot-card p3">
-        <div class="pilot-phase">Phase 3 · Months 10–18</div>
-        <h3>APQR Auto-Assembly &amp; Rollout</h3>
-        <p>Extend across product portfolio. Add APQR auto-assembly integrating Veeva + SAP QM + stability data.</p>
+      <div class="pc p3">
+        <div class="pc-phase">Phase 3 · Months 10–18</div>
+        <h3>🟣 APQR Auto-Assembly + Rollout</h3>
         <ul>
-          <li>Multi-system data connector (Veeva, SAP, LIMS)</li>
+          <li>Multi-system connector (Veeva + SAP + LIMS)</li>
           <li>APQR trend auto-population</li>
           <li>CMO document ingestion layer</li>
-          <li>Portfolio-level rollout</li>
+          <li>Portfolio-wide rollout</li>
         </ul>
-        <p style="margin-top:.6rem;font-size:.78rem;color:var(--text-2)"><strong>Target outcome:</strong> APQR cycle time from 2–4 weeks per product to 2–3 days. For a 40-product portfolio: reclaim ~160 analyst-weeks per year. Portfolio-wide deviation pattern visibility.</p>
-        <p style="margin-top:.5rem;font-size:.78rem;color:var(--text-2)"><strong>Validation scope:</strong> Broader — each new system integration requires qualification. Prioritise by product criticality and inspection risk.</p>
-        <div class="pilot-time">⏱ Full ROI realization within 18 months of Phase 1 start</div>
+        <div class="pc-out"><strong>Target:</strong> APQR cycle 2–4 weeks → 2–3 days. For 40-product portfolio: reclaim ~160 analyst-weeks/year.<br><strong>Validation:</strong> Each new system integration requires qualification.</div>
+        <div class="pc-time">⏱ Full ROI realization within 18 months of Phase 1</div>
       </div>
     </div>
 
-    <!-- CHANGE MANAGEMENT — new section -->
-    <div class="sec-label" style="margin-top:1rem">Change Management</div>
-    <h3 style="font-size:1.2rem;font-weight:800;color:var(--text-1);margin-bottom:.5rem;letter-spacing:-.02em">What Happens to the QA Team</h3>
-    <p style="font-size:.9rem;color:var(--text-2);line-height:1.7;margin-bottom:1.25rem;max-width:700px">QA managers will ask: does AI replace headcount or redeploy it? The evidence from analogous implementations (legal AI, financial document review) is consistent: <strong>headcount is not reduced — it is redeployed from mechanical review to exception investigation, process improvement, and supplier quality oversight.</strong> The UCB case study saw zero headcount reduction; instead, QA associates shifted from batch record reads to root cause analysis, CAPA effectiveness follow-up, and CMO audit preparation — higher-value work with lower attrition risk.</p>
-
-    <div class="change-grid">
-      <div class="change-card">
-        <h4>What Changes for QA Associates</h4>
+    <!-- Change Management -->
+    <p style="font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text-3);margin-bottom:.75rem;">Change Management — What Happens to the QA Team</p>
+    <div class="note green" style="margin-bottom:.9rem;">
+      <div class="note-label">Evidence from the UCB Pilot</div>
+      <div class="note-text">Headcount is <strong>not reduced — it is redeployed</strong> from mechanical review to root cause analysis, CAPA effectiveness follow-up, and supplier quality oversight. Higher-value work with lower attrition risk.</div>
+    </div>
+    <div class="cm-grid">
+      <div class="cm">
+        <h4>QA Associates</h4>
         <ul>
-          <li>Batch record review shifts from full-document reads to exception-based review of AI-flagged items</li>
-          <li>CAPA writing shifts from blank-page drafting to review, edit, and approval of AI-drafted text</li>
-          <li>APQR shifts from data gathering to trend interpretation and regulatory narrative</li>
-          <li>New skill: evaluating AI output for completeness and errors of omission — requires training</li>
-          <li>Automation bias training is mandatory before deployment, not optional</li>
+          <li>Batch record reads → exception-based review of AI-flagged items</li>
+          <li>CAPA blank-page drafting → review and approve AI-drafted text</li>
+          <li>APQR data gathering → trend interpretation and regulatory narrative</li>
+          <li>New skill required: evaluating AI output for errors of omission</li>
+          <li>Automation bias training: <strong>mandatory before go-live, not optional</strong></li>
         </ul>
       </div>
-      <div class="change-card">
-        <h4>What the Rollout Requires from Quality Leadership</h4>
+      <div class="cm">
+        <h4>Quality Leadership</h4>
         <ul>
-          <li>Written AI use policy covering which GMP document types AI may and may not assist with</li>
-          <li>Formal automation bias training added to QA onboarding and annual GMP training</li>
-          <li>Clear escalation path when AI flags a finding the reviewer does not understand</li>
-          <li>Defined KPIs for the pilot: review time, CAPA first-pass rate, deviation escape rate</li>
-          <li>Inspection readiness narrative prepared before any AI tool is used in GMP scope</li>
+          <li>Written AI use policy covering GMP document types (in/out scope)</li>
+          <li>Automation bias training added to QA onboarding and annual GMP training</li>
+          <li>Pilot KPIs: review time, CAPA first-pass rate, deviation escape rate</li>
+          <li>Inspection readiness narrative prepared before any AI enters GMP scope</li>
         </ul>
       </div>
-      <div class="change-card">
-        <h4>What the Validation Team Needs</h4>
+      <div class="cm">
+        <h4>Validation Team</h4>
         <ul>
-          <li>Vendor-supplied IQ/OQ/PQ package — do not write from scratch</li>
-          <li>Computer System Validation (CSV) assessment per GAMP 5 / Annex 11 Appendix</li>
-          <li>Periodic review plan for AI system performance — static model vs. continuously learning</li>
+          <li>Require vendor-supplied IQ/OQ/PQ package — do not write from scratch</li>
+          <li>CSV assessment per GAMP 5 / EU GMP Annex 11 Appendix</li>
+          <li>Periodic review plan: static vs. continuously-learning model</li>
           <li>Change control procedure for model updates and re-validation triggers</li>
         </ul>
       </div>
-      <div class="change-card">
-        <h4>Realistic Timeline Expectations</h4>
+      <div class="cm">
+        <h4>Realistic Timeline</h4>
         <ul>
-          <li>Vendor selection to signed contract: 2–4 months (IT security review is the bottleneck)</li>
-          <li>Corpus quality assessment: 4–8 weeks (often surfaces data governance issues)</li>
-          <li>IQ/OQ execution: 6–8 weeks for Phase 1 scope</li>
+          <li>Vendor selection → contract signed: 2–4 months (IT security is bottleneck)</li>
+          <li>Corpus quality assessment: 4–8 weeks (often surfaces data governance gaps)</li>
+          <li>IQ/OQ execution Phase 1: 6–8 weeks</li>
           <li>Training + go-live: 2–3 weeks</li>
-          <li>First measurable data available: 90 days post go-live</li>
-          <li>Total Phase 1 elapsed time: 6–9 months from project kick-off</li>
+          <li>First measurable data: 90 days post go-live</li>
+          <li><strong>Total Phase 1 elapsed: 6–9 months from kick-off</strong></li>
         </ul>
       </div>
     </div>
@@ -1087,80 +806,42 @@ footer strong{color:var(--text-2);}
 </section>
 
 <footer>
-  <div class="container">
-    <p>
-      <strong>AI for GMP Documentation — A Practical Guide for Quality Managers</strong><br>
-      Authored by <strong>Nathan Qin</strong> · NathanTwin Intelligence · June 2026<br>
-      <span style="margin-top:.4rem;display:block;">
-        Sources: EMA Annex 22 Draft (Jul 2025) · PDA Journal pdajpst.2025-000076.1 (Feb 2026) ·
-        Sanofi Global Quality Manual v10 (Mar 2024) · FDA cGMP AI Warning Letter (Apr 2026) ·
-        PMC12195787 · ICH Q10 Pharmaceutical Quality System Guideline ·
-        MHRA Inspection Data 2016–2023 · Zamann Pharma GMP Data Integrity 2026 ·
-        Certainty Software FDA Warning Letters 2026 · ISPE Pharmaceutical Engineering ispeak 2026 ·
-        UCB Biopharma GMP AI Pilot, PDA Annual Meeting 2025 ·
-        EY GxP AI Compliance Switzerland 2025 · IntuitionLabs GMP AI Series 2025–2026 ·
-        Mordor Intelligence Pharma QMS Market Report 2024 ·
-        OpenText Life Sciences 2025 · SAP Joule product documentation 2024 ·
-        ETQ Reliance AI product release 2024 · Microsoft Copilot M365 documentation 2025
-      </span>
-    </p>
+  <div style="max-width:1080px;margin:0 auto;">
+    <strong>AI for GMP Documentation — A Practical Guide for Quality Managers</strong><br>
+    Authored by <strong>Nathan Qin</strong> · NathanTwin Intelligence · June 2026<br>
+    Sources: EMA Annex 22 Draft (Jul 2025) · PDA J Pharm Sci Tech pdajpst.2025-000076.1 (Feb 2026) · Sanofi Global Quality Manual v10 (Mar 2024) · FDA cGMP AI Warning Letter (Apr 2026) · PMC12195787 · ICH Q10 · MHRA Inspection Data 2016–2023 · Zamann Pharma 2026 · Certainty Software 2026 · ISPE Pharmaceutical Engineering 2026 · UCB Biopharma GMP AI Pilot, PDA Annual Meeting 2025 · EY GxP AI Compliance 2025 · IntuitionLabs 2025–2026 · Mordor Intelligence 2024 · OpenText Life Sciences 2025 · SAP Joule 2024 · ETQ Reliance AI 2024 · Microsoft Copilot M365 documentation 2025
   </div>
 </footer>
 
 <script>
-// Live FDA Feed with filtering
-let currentQuery = 'GMP OR manufacturing OR contamination OR sterility OR "data integrity"';
-
-function loadFeed(btn) {
-  if (btn) {
-    document.querySelectorAll('.feed-filter-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    currentQuery = btn.dataset.query;
+(function(){
+  function loadFeed(btn){
+    document.querySelectorAll('.ffbtn').forEach(b=>b.classList.remove('on'));
+    if(btn) btn.classList.add('on');
+    const q = btn ? btn.dataset.q : 'GMP OR manufacturing OR contamination OR sterility OR "data integrity"';
+    const body=document.getElementById('feed-body');
+    const meta=document.getElementById('feed-meta');
+    body.innerHTML='<div class="feed-spin">⟳ Fetching from api.fda.gov…</div>';
+    meta.textContent='Loading…';
+    const fmtDate=d=>(!d||d.length<8)?d||'':d.slice(0,4)+'-'+d.slice(4,6)+'-'+d.slice(6,8);
+    const clsLbl=c=>{c=(c||'').toUpperCase();if(/CLASS\s*III/i.test(c))return'III';if(/CLASS\s*II/i.test(c))return'II';if(/CLASS\s*I[^IV]/i.test(c)||c==='CLASS I')return'I';return(c.match(/[IV]+/)||['?'])[0];};
+    fetch('https://api.fda.gov/drug/enforcement.json?search=reason_for_recall:('+encodeURIComponent(q)+')&limit=8&sort=report_date:desc')
+      .then(r=>r.json()).then(d=>{
+        const rows=(d&&d.results)||[];
+        if(!rows.length){body.innerHTML='<div class="feed-spin">No records for this filter.</div>';meta.textContent='0 results';return;}
+        meta.textContent=rows.length+' records · '+new Date().toLocaleTimeString();
+        body.innerHTML=rows.map(r=>{
+          const cls=clsLbl(r.classification||'');
+          const firm=(r.recalling_firm||'').slice(0,52);
+          const reason=(r.reason_for_recall||'').slice(0,160);
+          const date=fmtDate(r.report_date||r.recall_initiation_date||'');
+          return`<div class="fi"><div class="fi-cls ${cls}">${cls}</div><div><div class="fi-firm">${firm}</div><div class="fi-reason">${reason}${reason.length>=160?'…':''}</div><div class="fi-date">${date} · openFDA</div></div></div>`;
+        }).join('');
+      }).catch(e=>{body.innerHTML=`<div class="feed-spin" style="color:var(--red)">openFDA unreachable: ${e.message}</div>`;meta.textContent='error';});
   }
-  const body = document.getElementById('feed-body');
-  const meta = document.getElementById('feed-meta');
-  body.innerHTML = '<div class="feed-loading">⟳ Fetching from api.fda.gov…</div>';
-  meta.textContent = 'Loading…';
-
-  const fmtDate = d => (!d || d.length < 8) ? (d || '') : d.slice(0,4) + '-' + d.slice(4,6) + '-' + d.slice(6,8);
-  const clsLabel = cls => {
-    const c = (cls || '').toUpperCase();
-    if (/CLASS\s*III/i.test(c)) return 'III';
-    if (/CLASS\s*II/i.test(c)) return 'II';
-    if (/CLASS\s*I[^IV]/i.test(c) || c === 'CLASS I') return 'I';
-    return (c.match(/[IV]+/) || ['?'])[0];
-  };
-
-  const q = encodeURIComponent('reason_for_recall:(' + currentQuery + ')');
-  fetch('https://api.fda.gov/drug/enforcement.json?search=' + q + '&limit=8&sort=report_date:desc')
-    .then(r => r.json())
-    .then(data => {
-      const rows = (data && data.results) || [];
-      if (!rows.length) {
-        body.innerHTML = '<div class="feed-loading">No records matching this filter in openFDA.</div>';
-        meta.textContent = '0 records';
-        return;
-      }
-      meta.textContent = rows.length + ' records · ' + new Date().toLocaleTimeString();
-      body.innerHTML = rows.map(r => {
-        const cls = clsLabel(r.classification || '');
-        const firm = (r.recalling_firm || '').substring(0, 50);
-        const reason = (r.reason_for_recall || '').substring(0, 170);
-        const date = fmtDate(r.report_date || r.recall_initiation_date || '');
-        return '<div class="feed-item">' +
-          '<div class="feed-cls ' + cls + '">' + cls + '</div>' +
-          '<div><div class="feed-firm">' + firm + '</div>' +
-          '<div class="feed-reason">' + reason + (reason.length >= 170 ? '…' : '') + '</div>' +
-          '<div class="feed-date">Report date: ' + date + ' · openFDA Drug Enforcement</div></div></div>';
-      }).join('');
-    })
-    .catch(e => {
-      body.innerHTML = '<div class="feed-loading" style="color:var(--red)">Could not reach openFDA: ' + e.message + '</div>';
-      meta.textContent = 'connection error';
-    });
-}
-
-loadFeed(null);
+  window.loadFeed=loadFeed;
+  loadFeed(null);
+})();
 </script>
 </body>
 </html>
