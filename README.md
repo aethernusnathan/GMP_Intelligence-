@@ -16,34 +16,23 @@ actually work — grounded in ICH Q10, FDA/EMA inspection data, and peer-reviewe
 - **Supply Chain Oversight** — CMO/CDMO documentation obligations; traceability requirements
 - **QMS Document Hierarchy** — L1 Policy through L6 APQR; the day-to-day review workflow
 - **Live FDA Enforcement Feed** — Real-time GMP drug recalls via openFDA (loads on page open)
-- **AI Tool Landscape** — Evidence-based capability matrix of Veeva, MasterControl, TrackWise, etc.
-- **Failure Mode Analysis** — Scientific diagnosis of why AI fails in GMP environments
+- **AI Tool Landscape** — Evidence-based capability matrix of Veeva, MasterControl, TrackWise, Documentum, SAP QM, Copilot M365
+- **Failure Mode Analysis** — 7 scientific reasons AI fails in GMP environments
 - **Compliant Architecture** — Four-layer design satisfying Annex 22 + 21 CFR Part 11
-- **EMA Annex 22 Timeline** — Regulatory window 2026–2028 and what it means for tool selection
+- **EMA Annex 22 Timeline** — Pre-inspection checklist and vendor evaluation framework
+- **Start Here** — Three-phase pilot path with realistic timelines and change management
 
-## Live APIs Wired
+## Live Regulatory Data
 
-| Jurisdiction | Institution | API Status |
+| Jurisdiction | Institution | API |
 |---|---|---|
 | 🇺🇸 US | FDA openFDA Drug Enforcement | ✦ Live REST API |
 | 🇪🇺 EU | EMA / Europe PMC | ✦ Live REST API |
-| 🇯🇵 Japan | PMDA | ◎ PubMed proxy |
-| 🇨🇳 China | NMPA | ◈ Portal reference |
-
-## Bruce Integration (Donna Research Agent)
-
-Added GMP routing to Bruce (`bruce.py`) and five new API clients to `clinical_apis.py`:
-- `openfda_drug_enforcement()` — FDA drug recalls / GMP enforcement
-- `openfda_drug_event()` — FAERS adverse events
-- `ema_medicines()` — EMA regulatory intelligence via Europe PMC
-- `pmda_notices()` — Japan PMDA via PubMed affil filter
-- `nmpa_china()` — China NMPA via PubMed affil filter
-
-Ask Bruce: *"What GMP manufacturing recalls has FDA issued in the last 6 months?"* → live openFDA data.
 
 ## View
 
 Open `index.html` in any browser. Live FDA enforcement data loads from openFDA on page load.
+Filter by product type: All GMP · Biologics/Sterile · Oral Solid · API/Impurity.
 
 ---
 
